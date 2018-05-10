@@ -28,3 +28,34 @@ final class Ones: UpperSectionScoreOption {
         super.init(roll: roll, die: .one)
     }
 }
+
+final class Twos: UpperSectionScoreOption {
+	init(roll: Roll) {
+		super.init(roll: roll, die: .two)
+	}
+}
+
+final class Threes: UpperSectionScoreOption {
+	init(roll: Roll) {
+		super.init(roll: roll, die: .three)
+	}
+}
+
+final class Fours: UpperSectionScoreOption {
+	init(roll: Roll) {
+		super.init(roll: roll, die: .four)
+	}
+}
+
+final class Fives: UpperSectionScoreOption {
+	init(roll: Roll) {
+		super.init(roll: roll, die: .five)
+	}
+}
+
+final class Sixes: UpperSectionScoreOption {
+	init(roll: Roll) {
+		super.init(roll: roll, die: .six)
+	}
+}
+
