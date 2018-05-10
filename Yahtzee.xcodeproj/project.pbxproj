@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F31E94F20A40C8300DDF9F2 /* ScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31E94E20A40C8300DDF9F2 /* ScoreTests.swift */; };
 		6F81E03E20A3EE6B0074E841 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E03C20A3EE6B0074E841 /* ViewController.swift */; };
 		6F81E03F20A3EE6B0074E841 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E03D20A3EE6B0074E841 /* AppDelegate.swift */; };
 		6F81E04520A3EE720074E841 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F81E04120A3EE720074E841 /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F31E94E20A40C8300DDF9F2 /* ScoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTests.swift; sourceTree = "<group>"; };
 		6F81E01820A3ED8B0074E841 /* Yahtzee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yahtzee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F81E02C20A3ED8C0074E841 /* YahtzeeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YahtzeeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F81E03C20A3EE6B0074E841 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			children = (
 				6F81E04A20A3EE750074E841 /* Info.plist */,
 				6F81E04920A3EE750074E841 /* YahtzeeTests.swift */,
+				6F31E94E20A40C8300DDF9F2 /* ScoreTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F31E94F20A40C8300DDF9F2 /* ScoreTests.swift in Sources */,
 				6F81E04D20A3EEA60074E841 /* YahtzeeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

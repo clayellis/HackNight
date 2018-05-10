@@ -59,6 +59,7 @@ final class Sixes: UpperSectionScoreOption {
         super.init(roll: roll, die: .six)
     }
 }
+
 // MARK: - Lower Section
 
 class OfAKindOption: ScoreOption {
@@ -129,7 +130,7 @@ class StraightOption: ScoreOption {
             return lower + minimumSequenceLength
         }
 
-        while upper < Die.all.count {
+        while upper <= Die.all.count {
             let range = Array(ordered.suffix(from: lower))
             if range == Array(lower...upper) {
                 return validScore
