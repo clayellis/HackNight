@@ -21,15 +21,22 @@ class YahtzeeTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testValidRoll() {
+        XCTAssertNoThrow(try Roll(dice: [.one, .two, .three, .four, .five]))
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+
+    func testInvalidRollCount() {
+        let dice: [Die] = [.one, .two]
+        XCTAssertThrowsError(try Roll(dice: dice), "Invalid roll count, too few.") { error in
+            guard let rollError = error as? Roll.Error else {
+                XCTFail("Expected a Roll.Error")
+                return
+            }
+
+            switch rollError {
+            case .invalidNumberOfDice(let count):
+                XCTAssertEqual(count, dice.count)
+            }
         }
     }
     
