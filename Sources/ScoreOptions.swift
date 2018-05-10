@@ -8,98 +8,67 @@
 
 import Foundation
 
+typealias ScoreOption = (Roll) -> Int
+
 // MARK: - Upper Section
 
-class UpperSectionScoreOption: ScoreOption {
-    let roll: Roll
-    let die: Die
+struct ScoreOptions {
+    private init() {}
 
-    init(roll: Roll, die: Die) {
-        self.roll = roll
-        self.die = die
+    static var allOptions: [ScoreOption] {
+        return [
+            ones, twos, threes, fours, fives, sixes,
+            threeOfAKind, fourOfAKind, fullHouse,
+            smallStraight, largeStriaght,
+            yahtzee, chance
+        ]
     }
 
-    func score() -> Int {
-        return roll.sum(of: die)
-    }
-}
+    // MARK: - Upper Section
 
-final class Ones: UpperSectionScoreOption {
-    init(roll: Roll) {
-        super.init(roll: roll, die: .one)
-    }
-}
-
-final class Twos: UpperSectionScoreOption {
-    init(roll: Roll) {
-        super.init(roll: roll, die: .two)
-    }
-}
-
-final class Threes: UpperSectionScoreOption {
-    init(roll: Roll) {
-        super.init(roll: roll, die: .three)
-    }
-}
-
-final class Fours: UpperSectionScoreOption {
-    init(roll: Roll) {
-        super.init(roll: roll, die: .four)
-    }
-}
-
-final class Fives: UpperSectionScoreOption {
-    init(roll: Roll) {
-        super.init(roll: roll, die: .five)
-    }
-}
-
-final class Sixes: UpperSectionScoreOption {
-    init(roll: Roll) {
-        super.init(roll: roll, die: .six)
-    }
-}
-
-// MARK: - Lower Section
-
-class OfAKindOption: ScoreOption {
-    let roll: Roll
-    let requiredCount: Int
-
-    init(roll: Roll, requiredCount: Int) {
-        self.roll = roll
-        self.requiredCount = requiredCount
+    static func ones(for roll: Roll) -> Int {
+        return roll.sum(of: .one)
     }
 
-    func score() -> Int {
-        if roll.hasCountOfAKind(count: requiredCount) {
+    static func twos(for roll: Roll) -> Int {
+        return roll.sum(of: .two)
+    }
+
+    static func threes(for roll: Roll) -> Int {
+        return roll.sum(of: .three)
+    }
+
+    static func fours(for roll: Roll) -> Int {
+        return roll.sum(of: .four)
+    }
+
+    static func fives(for roll: Roll) -> Int {
+        return roll.sum(of: .five)
+    }
+
+    static func sixes(for roll: Roll) -> Int {
+        return roll.sum(of: .six)
+    }
+
+    // MARK: - Lower Section
+
+    static func threeOfAKind(for roll: Roll) -> Int {
+        if roll.hasCountOfAKind(count: 3) {
             return roll.sum()
         } else {
             return 0
         }
     }
-}
 
-final class ThreeOfAKindOption: OfAKindOption {
-    init(roll: Roll) {
-        super.init(roll: roll, requiredCount: 3)
-    }
-}
-
-final class FourOfAKindOption: OfAKindOption {
-    init(roll: Roll) {
-        super.init(roll: roll, requiredCount: 4)
-    }
-}
-
-final class FullHouseOption: ScoreOption {
-    let roll: Roll
-
-    init(roll: Roll) {
-        self.roll = roll
+    static func fourOfAKind(for roll: Roll) -> Int {
+        if roll.hasCountOfAKind(count: 4) {
+            return roll.sum()
+        } else {
+            return 0
+        }
     }
 
-    func score() -> Int {
+    static func fullHouse(for roll: Roll) -> Int {
         let counts = roll.countPerDie().values
         if counts.contains(5) || (counts.contains(3) && counts.contains(2)) {
             return 25
@@ -107,82 +76,32 @@ final class FullHouseOption: ScoreOption {
             return 0
         }
     }
-}
 
-class StraightOption: ScoreOption {
-    let roll: Roll
-    let minimumSequenceLength: Int
-
-    init(roll: Roll, minimumSequenceLength: Int) {
-        self.roll = roll
-        self.minimumSequenceLength = minimumSequenceLength
-    }
-
-    var validScore: Int {
-        return 0
-    }
-
-    func score() -> Int {
-        let ordered = roll.dice.map { $0.rawValue }.sorted()
-
-        var lower = 0
-        var upper: Int {
-            return lower + minimumSequenceLength
+    static func smallStraight(for roll: Roll) -> Int {
+        if roll.hasSequence(ofLength: 4) {
+            return 30
+        } else {
+            return 0
         }
+    }
 
-        while upper <= Die.all.count {
-            let range = Array(ordered.suffix(from: lower))
-            if range == Array(lower...upper) {
-                return validScore
-            }
+    static func largeStriaght(for roll: Roll) -> Int {
+        if roll.hasSequence(ofLength: 5) {
+            return 40
+        } else {
+            return 0
         }
-
-        return 0
-    }
-}
-
-final class SmallStraightOption: StraightOption {
-    init(roll: Roll) {
-        super.init(roll: roll, minimumSequenceLength: 4)
     }
 
-    override var validScore: Int {
-        return 30
-    }
-}
-
-final class LargeStraightOption: StraightOption {
-    init(roll: Roll) {
-        super.init(roll: roll, minimumSequenceLength: 5)
+    static func yahtzee(for roll: Roll) -> Int {
+        if roll.hasCountOfAKind(count: 5) {
+            return 50
+        } else {
+            return 0
+        }
     }
 
-    override var validScore: Int {
-        return 40
-    }
-}
-
-final class YAHTZEE: ScoreOption {
-    static let YAHTZEE_SCORE = 50
-
-    var roll: Roll
-    init(roll: Roll) {
-        self.roll = roll
-    }
-
-    func score() -> Int {
-        let firstDie = self.roll.dice.first!
-        return self.roll.count(of: firstDie) == Roll.DICE_COUNT ? YAHTZEE.YAHTZEE_SCORE : 0
-    }
-}
-
-final class ChanceOption: ScoreOption {
-    var roll: Roll
-
-    init(roll: Roll) {
-        self.roll = roll
-    }
-
-    func score() -> Int {
+    static func chance(for roll: Roll) -> Int {
         return roll.sum()
     }
 }

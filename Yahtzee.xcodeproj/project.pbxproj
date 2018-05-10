@@ -17,7 +17,6 @@
 		6F81E04D20A3EEA60074E841 /* YahtzeeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E04920A3EE750074E841 /* YahtzeeTests.swift */; };
 		6F81E04F20A3F57A0074E841 /* Die.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E04E20A3F57A0074E841 /* Die.swift */; };
 		6F81E05120A3F5890074E841 /* Roll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E05020A3F5890074E841 /* Roll.swift */; };
-		6F81E05320A3F5950074E841 /* ScoreOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E05220A3F5950074E841 /* ScoreOption.swift */; };
 		6F81E05520A3F5BF0074E841 /* ScoreOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E05420A3F5BF0074E841 /* ScoreOptions.swift */; };
 		830CF47B20A412B60051E752 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF47A20A412B60051E752 /* HeaderView.swift */; };
 		830CF48120A41F300051E752 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF48020A41F300051E752 /* MainView.swift */; };
@@ -46,7 +45,6 @@
 		6F81E04A20A3EE750074E841 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F81E04E20A3F57A0074E841 /* Die.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Die.swift; sourceTree = "<group>"; };
 		6F81E05020A3F5890074E841 /* Roll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Roll.swift; sourceTree = "<group>"; };
-		6F81E05220A3F5950074E841 /* ScoreOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreOption.swift; sourceTree = "<group>"; };
 		6F81E05420A3F5BF0074E841 /* ScoreOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreOptions.swift; sourceTree = "<group>"; };
 		830CF47A20A412B60051E752 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		830CF48020A41F300051E752 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 				6F81E03D20A3EE6B0074E841 /* AppDelegate.swift */,
 				6F81E04E20A3F57A0074E841 /* Die.swift */,
 				6F81E05020A3F5890074E841 /* Roll.swift */,
-				6F81E05220A3F5950074E841 /* ScoreOption.swift */,
 				6F81E05420A3F5BF0074E841 /* ScoreOptions.swift */,
 			);
 			path = Sources;
@@ -237,7 +234,6 @@
 				6F81E03F20A3EE6B0074E841 /* AppDelegate.swift in Sources */,
 				830CF47B20A412B60051E752 /* HeaderView.swift in Sources */,
 				6F81E03E20A3EE6B0074E841 /* ViewController.swift in Sources */,
-				6F81E05320A3F5950074E841 /* ScoreOption.swift in Sources */,
 				6F81E05120A3F5890074E841 /* Roll.swift in Sources */,
 				6F81E04F20A3F57A0074E841 /* Die.swift in Sources */,
 				830CF48120A41F300051E752 /* MainView.swift in Sources */,
