@@ -14,70 +14,70 @@ class ScoreTests: XCTestCase {
     // MARK: Upper Section
 
     func testOnesOption() throws {
-        try assert(1, 1, 2, 3, 4, scoreEquals: 2, using: ScoreOptions.ones)
+        try assert(1, 1, 2, 3, 4, scoreEquals: 2, using: .ones)
     }
 
     func testTwosOption() throws {
-        try assert(1, 2, 2, 3, 4, scoreEquals: 4, using: ScoreOptions.twos)
+        try assert(1, 2, 2, 3, 4, scoreEquals: 4, using: .twos)
     }
 
     func testThreesOption() throws {
-        try assert(1, 2, 2, 3, 3, scoreEquals: 6, using: ScoreOptions.threes)
+        try assert(1, 2, 2, 3, 3, scoreEquals: 6, using: .threes)
     }
 
     func testFoursOption() throws {
-        try assert(1, 2, 4, 4, 5, scoreEquals: 8, using: ScoreOptions.fours)
+        try assert(1, 2, 4, 4, 5, scoreEquals: 8, using: .fours)
     }
 
     func testFivesOption() throws {
-        try assert(1, 5, 5, 3, 2, scoreEquals: 10, using: ScoreOptions.fives)
+        try assert(1, 5, 5, 3, 2, scoreEquals: 10, using: .fives)
     }
 
     func testSixesOption() throws {
-        try assert(1, 2, 4, 6, 6, scoreEquals: 12, using: ScoreOptions.sixes)
+        try assert(1, 2, 4, 6, 6, scoreEquals: 12, using: .sixes)
     }
 
     // MARK: Lower Section
 
     func testThreeOfAKind() throws {
-        try assert(1, 1, 1, 3, 5, scoreEquals: 11, using: ScoreOptions.threeOfAKind)
+        try assert(1, 1, 1, 3, 5, scoreEquals: 11, using: .threeOfAKind)
     }
 
     func testThreeOfAKindZero() throws {
-        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: ScoreOptions.threeOfAKind)
+        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: .threeOfAKind)
     }
 
     func testFourOfAKind() throws {
-        try assert(3, 3, 3, 3, 2, scoreEquals: 14, using: ScoreOptions.fourOfAKind)
+        try assert(3, 3, 3, 3, 2, scoreEquals: 14, using: .fourOfAKind)
     }
 
     func testFourOfAKindZero() throws {
-        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: ScoreOptions.fourOfAKind)
+        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: .fourOfAKind)
     }
 
     func testSmallStraight() throws {
-        try assert(1, 2, 3, 4, 1, scoreEquals: 30, using: ScoreOptions.smallStraight)
-        try assert(5, 2, 3, 4, 5, scoreEquals: 30, using: ScoreOptions.smallStraight)
-        try assert(5, 3, 4, 5, 6, scoreEquals: 30, using: ScoreOptions.smallStraight)
+        try assert(1, 2, 3, 4, 1, scoreEquals: 30, using: .smallStraight)
+        try assert(5, 2, 3, 4, 5, scoreEquals: 30, using: .smallStraight)
+        try assert(5, 3, 4, 5, 6, scoreEquals: 30, using: .smallStraight)
     }
 
     func testLargeStraight() throws {
-        try assert(1, 2, 3, 4, 5, scoreEquals: 40, using: ScoreOptions.largeStriaght)
-        try assert(2, 3, 4, 5, 6, scoreEquals: 40, using: ScoreOptions.largeStriaght)
+        try assert(1, 2, 3, 4, 5, scoreEquals: 40, using: .largeStriaght)
+        try assert(2, 3, 4, 5, 6, scoreEquals: 40, using: .largeStriaght)
     }
 
     func testYahtzee() throws {
-        try assert(5, 5, 5, 5, 5, scoreEquals: 50, using: ScoreOptions.yahtzee)
+        try assert(5, 5, 5, 5, 5, scoreEquals: 50, using: .yahtzee)
     }
 
     func testChance() throws {
-        try assert(1, 3, 4, 6, 2, scoreEquals: 16, using: ScoreOptions.chance)
+        try assert(1, 3, 4, 6, 2, scoreEquals: 16, using: .chance)
     }
 }
 
 extension ScoreTests {
     func assert(_ d1: Int, _ d2: Int, _ d3: Int, _ d4: Int, _ d5: Int, scoreEquals expectedScore: Int, using option: ScoreOption) throws {
         let roll = try Roll(d1, d2, d3, d4, d5)
-        XCTAssertEqual(option(roll), expectedScore)
+        XCTAssertEqual(option.score(for: roll), expectedScore)
     }
 }

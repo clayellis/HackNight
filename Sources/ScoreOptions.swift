@@ -8,14 +8,15 @@
 
 import Foundation
 
-typealias ScoreOption = (Roll) -> Int
-
 // MARK: - Upper Section
 
-struct ScoreOptions {
-    private init() {}
+enum ScoreOption {
+    case ones, twos, threes, fours, fives, sixes,
+    threeOfAKind, fourOfAKind, fullHouse,
+    smallStraight, largeStriaght,
+    yahtzee, chance
 
-    static var allOptions: [ScoreOption] {
+    static var all: [ScoreOption] {
         return [
             ones, twos, threes, fours, fives, sixes,
             threeOfAKind, fourOfAKind, fullHouse,
@@ -24,84 +25,77 @@ struct ScoreOptions {
         ]
     }
 
-    // MARK: - Upper Section
+    func score(for roll: Roll) -> Int {
+        switch self {
 
-    static func ones(for roll: Roll) -> Int {
-        return roll.sum(of: .one)
-    }
+            // MARK: - Upper Section
 
-    static func twos(for roll: Roll) -> Int {
-        return roll.sum(of: .two)
-    }
+        case .ones:
+            return roll.sum(of: .one)
 
-    static func threes(for roll: Roll) -> Int {
-        return roll.sum(of: .three)
-    }
+        case .twos:
+            return roll.sum(of: .two)
 
-    static func fours(for roll: Roll) -> Int {
-        return roll.sum(of: .four)
-    }
+        case .threes:
+            return roll.sum(of: .three)
 
-    static func fives(for roll: Roll) -> Int {
-        return roll.sum(of: .five)
-    }
+        case .fours:
+            return roll.sum(of: .four)
 
-    static func sixes(for roll: Roll) -> Int {
-        return roll.sum(of: .six)
-    }
+        case .fives:
+            return roll.sum(of: .five)
 
-    // MARK: - Lower Section
+        case .sixes:
+            return roll.sum(of: .six)
 
-    static func threeOfAKind(for roll: Roll) -> Int {
-        if roll.hasCountOfAKind(count: 3) {
+            // MARK: - Lower Section
+
+        case .threeOfAKind:
+            if roll.hasCountOfAKind(count: 3) {
+                return roll.sum()
+            } else {
+                return 0
+            }
+
+        case .fourOfAKind:
+            if roll.hasCountOfAKind(count: 4) {
+                return roll.sum()
+            } else {
+                return 0
+            }
+
+        case .fullHouse:
+            let counts = roll.countPerDie().values
+            if counts.contains(5) || (counts.contains(3) && counts.contains(2)) {
+                return 25
+            } else {
+                return 0
+            }
+
+        case .smallStraight:
+            if roll.hasSequence(ofLength: 4) {
+                return 30
+            } else {
+                return 0
+            }
+
+        case .largeStriaght:
+            if roll.hasSequence(ofLength: 5) {
+                return 40
+            } else {
+                return 0
+            }
+
+        case .yahtzee:
+            if roll.hasCountOfAKind(count: 5) {
+                return 50
+            } else {
+                return 0
+            }
+
+        case .chance:
             return roll.sum()
-        } else {
-            return 0
-        }
-    }
 
-    static func fourOfAKind(for roll: Roll) -> Int {
-        if roll.hasCountOfAKind(count: 4) {
-            return roll.sum()
-        } else {
-            return 0
         }
-    }
-
-    static func fullHouse(for roll: Roll) -> Int {
-        let counts = roll.countPerDie().values
-        if counts.contains(5) || (counts.contains(3) && counts.contains(2)) {
-            return 25
-        } else {
-            return 0
-        }
-    }
-
-    static func smallStraight(for roll: Roll) -> Int {
-        if roll.hasSequence(ofLength: 4) {
-            return 30
-        } else {
-            return 0
-        }
-    }
-
-    static func largeStriaght(for roll: Roll) -> Int {
-        if roll.hasSequence(ofLength: 5) {
-            return 40
-        } else {
-            return 0
-        }
-    }
-
-    static func yahtzee(for roll: Roll) -> Int {
-        if roll.hasCountOfAKind(count: 5) {
-            return 50
-        } else {
-            return 0
-        }
-    }
-
-    static func chance(for roll: Roll) -> Int {
-        return roll.sum()
     }
 }
