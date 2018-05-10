@@ -16,15 +16,6 @@ enum ScoreOption {
     smallStraight, largeStriaght,
     yahtzee, chance
 
-    static var all: [ScoreOption] {
-        return [
-            ones, twos, threes, fours, fives, sixes,
-            threeOfAKind, fourOfAKind, fullHouse,
-            smallStraight, largeStriaght,
-            yahtzee, chance
-        ]
-    }
-
     func score(for roll: Roll) -> Int {
         switch self {
 
@@ -97,5 +88,37 @@ enum ScoreOption {
             return roll.sum()
 
         }
+    }
+}
+
+extension ScoreOption {
+    static var all: [ScoreOption] {
+        return [
+            ones, twos, threes, fours, fives, sixes,
+            threeOfAKind, fourOfAKind, fullHouse,
+            smallStraight, largeStriaght,
+            yahtzee, chance
+        ]
+    }
+
+    static var upperSection: [ScoreOption] {
+        return all.filter { $0.isUpperSection }
+    }
+
+    static var lowerSection: [ScoreOption] {
+        return all.filter { $0.isLowerSection }
+    }
+
+    var isUpperSection: Bool {
+        switch self {
+        case .ones, .twos, .threes, .fours, .fives, .sixes:
+            return true
+        default:
+            return false
+        }
+    }
+
+    var isLowerSection: Bool {
+        return !isUpperSection
     }
 }
