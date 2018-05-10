@@ -51,16 +51,16 @@ extension Array where Element == Die {
         return self.map { $0.rawValue }.reduce(0, +)
     }
 
-	static func roll(presets: [Int : Die] = [:]) -> Roll {
-		var dice: [Die] = []
-		for i in 0..<DICE_COUNT {
-			if let presetDie = presets[i] {
-				dice.append(presetDie)
-			} else {
-				dice.append(Die.random())
-			}
-		}
+    static func roll(presets: [Int : Die] = [:]) -> Roll {
+        var dice: [Die] = []
+        for i in 0..<DICE_COUNT {
+            if let presetDie = presets[i] {
+                dice.append(presetDie)
+            } else {
+                dice.append(Die.random())
+            }
+        }
 
-		return Roll(dice: dice)
-	}
+        return Roll(dice: dice)
+    }
 }
