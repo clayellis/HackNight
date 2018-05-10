@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: - Upper Section
+
 class UpperSectionScoreOption: ScoreOption {
     let roll: Roll
     let die: Die
@@ -19,7 +21,6 @@ class UpperSectionScoreOption: ScoreOption {
 
     func score() -> Int {
         return roll.sum(of: die)
-
     }
 }
 
