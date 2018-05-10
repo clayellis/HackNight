@@ -12,6 +12,6 @@ struct Roll {
     let dice: [Die]
 
     func sum(of die: Die) -> Int {
-        return dice.filter { $0 == die }.map { $0.rawValue }.reduce(+)
+        return dice.filter { $0 == die }.map { $0.rawValue }.reduce(0, +)
     }
 }
