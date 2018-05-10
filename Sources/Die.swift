@@ -13,16 +13,16 @@ enum Die: Int {
 
     static var all: [Die] = [.one, .two, .three, .four, .five, .six]
 
-	private static let count: Die.RawValue = {
-		var nextValue: Int = 0
-		while let _ = Die(rawValue: nextValue) {
-			nextValue += 1
-		}
-		return nextValue
-	}()
+    private static let count: Die.RawValue = {
+        var nextValue: Int = 0
+        while let _ = Die(rawValue: nextValue) {
+            nextValue += 1
+        }
+        return nextValue
+    }()
 
-	static func random() -> Die {
-		let rand = Int(arc4random_uniform(UInt32(count)))
-		return Die(rawValue: rand)!
-	}
+    static func random() -> Die {
+        let rand = Int(arc4random_uniform(UInt32(count)))
+        return Die(rawValue: rand)!
+    }
 }
