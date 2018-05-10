@@ -162,7 +162,7 @@ final class LargeStraightOption: StraightOption {
 }
 
 final class YAHTZEE: ScoreOption {
-    private static let YAHTZEE_SCORE = 50
+    static let YAHTZEE_SCORE = 50
 
     var roll: Roll
     init(roll: Roll) {

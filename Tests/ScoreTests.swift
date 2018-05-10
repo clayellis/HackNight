@@ -16,4 +16,18 @@ class ScoreTests: XCTestCase {
     }
 
     // Yo Danny Boy
+
+    func testYahtzeeScoreOption() {
+        var test = YAHTZEE(roll: Roll(dice: [.one, .one, .one, .one, .one]))
+
+        XCTAssertEqual(test.score(), YAHTZEE.YAHTZEE_SCORE)
+
+        test = YAHTZEE(roll: Roll(dice: [.five, .five, .five, .five, .five]))
+
+        XCTAssertEqual(test.score(), YAHTZEE.YAHTZEE_SCORE)
+
+        test = YAHTZEE(roll: Roll(dice: [.one, .two, .three, .three, .four]))
+
+        XCTAssertEqual(test.score(), 0)
+    }
 }
