@@ -8,10 +8,27 @@
 
 import Foundation
 
-private let DICE_COUNT = 5
-
 struct Roll {
+    static let DICE_COUNT = 5
     let dice: [Die]
+
+    init(dice: [Die]) {
+        assert(dice.count == Roll.DICE_COUNT)
+        self.dice = dice
+    }
+
+    static func roll(presets: [Int : Die] = [:]) -> Roll {
+        var dice: [Die] = []
+        for i in 0..<DICE_COUNT {
+            if let presetDie = presets[i] {
+                dice.append(presetDie)
+            } else {
+                dice.append(Die.random())
+            }
+        }
+
+        return Roll(dice: dice)
+    }
 
     // MARK: Sum
 
@@ -49,18 +66,5 @@ struct Roll {
 extension Array where Element == Die {
     func sum() -> Int {
         return self.map { $0.rawValue }.reduce(0, +)
-    }
-
-    static func roll(presets: [Int : Die] = [:]) -> Roll {
-        var dice: [Die] = []
-        for i in 0..<DICE_COUNT {
-            if let presetDie = presets[i] {
-                dice.append(presetDie)
-            } else {
-                dice.append(Die.random())
-            }
-        }
-
-        return Roll(dice: dice)
     }
 }
