@@ -26,3 +26,11 @@ enum Die: Int {
         return Die(rawValue: rand)!
     }
 }
+
+extension Die: ExpressibleByIntegerLiteral {
+    typealias IntegerLiteralType = Int
+
+    init(integerLiteral value: IntegerLiteralType) {
+        self.init(rawValue: value)!
+    }
+}
