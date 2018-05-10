@@ -159,3 +159,29 @@ final class LargeStraightOption: StraightOption {
         return 40
     }
 }
+
+final class YAHTZEE: ScoreOption {
+    private static let YAHTZEE_SCORE = 50
+
+    var roll: Roll
+    init(roll: Roll) {
+        self.roll = roll
+    }
+
+    func score() -> Int {
+        let firstDie = self.roll.dice.first!
+        return self.roll.count(of: firstDie) == Roll.DICE_COUNT ? YAHTZEE.YAHTZEE_SCORE : 0
+    }
+}
+
+final class ChanceOption: ScoreOption {
+    var roll: Roll
+
+    init(roll: Roll) {
+        self.roll = roll
+    }
+
+    func score() -> Int {
+        return roll.sum()
+    }
+}
