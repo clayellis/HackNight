@@ -77,16 +77,21 @@ struct Roll {
     // MARK: Sequence Length
 
     func hasSequence(ofLength length: Int) -> Bool {
-        let ordered = dice.map { $0.rawValue }.sorted()
+        let ordered = Set(dice.map { $0.rawValue }).sorted()
+        var currentSequenceLength = 1
+        for (index, current) in ordered.enumerated() {
+            guard ordered.indices.contains(index + 1) else {
+                break
+            }
 
-        var lower = 0
-        var upper: Int {
-            return lower + length
-        }
+            let next = ordered[index + 1]
+            if next - current == 1 {
+                currentSequenceLength += 1
+            } else {
+                currentSequenceLength = 1
+            }
 
-        while upper <= Die.all.count {
-            let range = Array(ordered.suffix(from: lower))
-            if range == Array(lower...upper) {
+            if currentSequenceLength == length {
                 return true
             }
         }

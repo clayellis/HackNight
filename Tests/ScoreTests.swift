@@ -39,19 +39,40 @@ class ScoreTests: XCTestCase {
 
     // MARK: Lower Section
 
-//    func testYahtzeeScoreOption() {
-//        var test = YAHTZEE(roll: Roll(dice: [.one, .one, .one, .one, .one]))
-//
-//        XCTAssertEqual(test.score(), YAHTZEE.YAHTZEE_SCORE)
-//
-//        test = YAHTZEE(roll: Roll(dice: [.five, .five, .five, .five, .five]))
-//
-//        XCTAssertEqual(test.score(), YAHTZEE.YAHTZEE_SCORE)
-//
-//        test = YAHTZEE(roll: Roll(dice: [.one, .two, .three, .three, .four]))
-//
-//        XCTAssertEqual(test.score(), 0)
-//    }
+    func testThreeOfAKind() throws {
+        try assert(1, 1, 1, 3, 5, scoreEquals: 11, using: ScoreOptions.threeOfAKind)
+    }
+
+    func testThreeOfAKindZero() throws {
+        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: ScoreOptions.threeOfAKind)
+    }
+
+    func testFourOfAKind() throws {
+        try assert(3, 3, 3, 3, 2, scoreEquals: 14, using: ScoreOptions.fourOfAKind)
+    }
+
+    func testFourOfAKindZero() throws {
+        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: ScoreOptions.fourOfAKind)
+    }
+
+    func testSmallStraight() throws {
+        try assert(1, 2, 3, 4, 1, scoreEquals: 30, using: ScoreOptions.smallStraight)
+        try assert(5, 2, 3, 4, 5, scoreEquals: 30, using: ScoreOptions.smallStraight)
+        try assert(5, 3, 4, 5, 6, scoreEquals: 30, using: ScoreOptions.smallStraight)
+    }
+
+    func testLargeStraight() throws {
+        try assert(1, 2, 3, 4, 5, scoreEquals: 40, using: ScoreOptions.largeStriaght)
+        try assert(2, 3, 4, 5, 6, scoreEquals: 40, using: ScoreOptions.largeStriaght)
+    }
+
+    func testYahtzee() throws {
+        try assert(5, 5, 5, 5, 5, scoreEquals: 50, using: ScoreOptions.yahtzee)
+    }
+
+    func testChance() throws {
+        try assert(1, 3, 4, 6, 2, scoreEquals: 16, using: ScoreOptions.chance)
+    }
 }
 
 extension ScoreTests {
