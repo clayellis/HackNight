@@ -10,4 +10,6 @@ import Foundation
 
 enum Die: Int {
     case one = 1, two, three, four, five, six
+
+    static var all: [Die] = [.one, .two, .three, .four, .five, .six]
 }
