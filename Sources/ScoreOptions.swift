@@ -31,33 +31,33 @@ final class Ones: UpperSectionScoreOption {
 }
 
 final class Twos: UpperSectionScoreOption {
-	init(roll: Roll) {
-		super.init(roll: roll, die: .two)
-	}
+    init(roll: Roll) {
+        super.init(roll: roll, die: .two)
+    }
 }
 
 final class Threes: UpperSectionScoreOption {
-	init(roll: Roll) {
-		super.init(roll: roll, die: .three)
-	}
+    init(roll: Roll) {
+        super.init(roll: roll, die: .three)
+    }
 }
 
 final class Fours: UpperSectionScoreOption {
-	init(roll: Roll) {
-		super.init(roll: roll, die: .four)
-	}
+    init(roll: Roll) {
+        super.init(roll: roll, die: .four)
+    }
 }
 
 final class Fives: UpperSectionScoreOption {
-	init(roll: Roll) {
-		super.init(roll: roll, die: .five)
-	}
+    init(roll: Roll) {
+        super.init(roll: roll, die: .five)
+    }
 }
 
 final class Sixes: UpperSectionScoreOption {
-	init(roll: Roll) {
-		super.init(roll: roll, die: .six)
-	}
+    init(roll: Roll) {
+        super.init(roll: roll, die: .six)
+    }
 }
 // MARK: - Lower Section
 
@@ -108,20 +108,54 @@ final class FullHouseOption: ScoreOption {
     }
 }
 
-//class StraightOption: ScoreOption {
-//    let roll: Roll
-//    let minimumSequenceLength: Int
-//
-//    init(roll: Roll, minimumSequenceLength: Int) {
-//        self.roll = roll
-//        self.minimumSequenceLength = minimumSequenceLength
-//    }
-//
-//    func score() -> Int {
-//        let ordered = roll.dice.map { $0.rawValue }.sorted()
-//        var lower = 0
-//        var currentRange = Array(lower...)
-//        Array(0...3)
-//    }
-//}
+class StraightOption: ScoreOption {
+    let roll: Roll
+    let minimumSequenceLength: Int
 
+    init(roll: Roll, minimumSequenceLength: Int) {
+        self.roll = roll
+        self.minimumSequenceLength = minimumSequenceLength
+    }
+
+    var validScore: Int {
+        return 0
+    }
+
+    func score() -> Int {
+        let ordered = roll.dice.map { $0.rawValue }.sorted()
+
+        var lower = 0
+        var upper: Int {
+            return lower + minimumSequenceLength
+        }
+
+        while upper < Die.all.count {
+            let range = Array(ordered.suffix(from: lower))
+            if range == Array(lower...upper) {
+                return validScore
+            }
+        }
+
+        return 0
+    }
+}
+
+final class SmallStraightOption: StraightOption {
+    init(roll: Roll) {
+        super.init(roll: roll, minimumSequenceLength: 4)
+    }
+
+    override var validScore: Int {
+        return 30
+    }
+}
+
+final class LargeStraightOption: StraightOption {
+    init(roll: Roll) {
+        super.init(roll: roll, minimumSequenceLength: 5)
+    }
+
+    override var validScore: Int {
+        return 40
+    }
+}
