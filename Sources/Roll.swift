@@ -8,52 +8,106 @@
 
 import Foundation
 
+/// Represents a roll in the game.
 struct Roll {
-    enum Error: Swift.Error {
-        case invalidNumberOfDice(Int)
-    }
 
-    static let DICE_COUNT = 5
+    /// The dice which this `Roll` contains.
     let dice: [Die]
 
-    init(dice: [Die]) throws {
-        guard dice.count == Roll.DICE_COUNT else {
-            throw Error.invalidNumberOfDice(dice.count)
+    /// Creates a new `Roll` using optional presets.
+    /// - Parameters:
+    ///     - presets: A dictionary of `Die` presets where `key` is the position of the preset,
+    ///                and `value` is the `Die` at the preset position.
+    /// - Returns: A new `Roll` using the `presets` if present, otherwise an entirely random `Roll`.
+    init(presets: [Int: Die] = [:]) {
+        if presets.isEmpty {
+            self.dice = (0 ..< Constants.requiredDiceCount).map { _ in Die.random() }
+        } else {
+            var dice: [Die] = []
+            for i in 0 ..< Constants.requiredDiceCount {
+                if let presetDie = presets[i] {
+                    dice.append(presetDie)
+                } else {
+                    dice.append(Die.random())
+                }
+            }
+            self.dice = dice
+        }
+    }
+
+    /// Creates a new `Roll` from a list of `Int`s.
+    /// - Parameters:
+    ///     - ints: A list of integers that represent individual `Dice`.
+    /// - Throws: If `ints` contained too many or too few values, or if a value was invalid.
+    /// - Returns: A new `Roll` using the list of integers.
+    init(_ ints: Int...) throws {
+        guard ints.count == Constants.requiredDiceCount else {
+            throw Error.invalidNumberOfDice(ints.count)
+        }
+
+        let dice: [Die] = try ints.map {
+            guard let dice = Die(rawValue: $0) else {
+                throw Error.invalidDiceValue($0)
+            }
+
+            return dice
         }
 
         self.dice = dice
     }
+}
 
-    init(_ ints: Int...) throws {
-        let dice = ints.compactMap { Die(rawValue: $0) }
-        try self.init(dice: dice)
-    }
+// MARK: - Re-roll
 
-    static func roll(presets: [Int : Die] = [:]) -> Roll {
-        var dice: [Die] = []
-        for i in 0..<DICE_COUNT {
-            if let presetDie = presets[i] {
-                dice.append(presetDie)
-            } else {
-                dice.append(Die.random())
+extension Roll {
+
+    /// Creates a new `Roll`, optionally saving the dice at the given positions.
+    /// - Parameters:
+    ///     - positions: The positions of the dice that should not be re-rolled.
+    /// - Throws: If any of the positions were invalid.
+    /// - Returns: A new `Roll`, optionally saving the dice at the given positions.
+    func reroll(savingDiceAt positions: [Int] = []) throws -> Roll {
+        var presets = [Int: Die]()
+        for position in positions {
+            guard dice.indices.contains(position) else {
+                throw Error.invalidPosition(position)
             }
+
+            presets[position] = dice[position]
         }
 
-        return try! Roll(dice: dice)
+        return Roll(presets: presets)
     }
 
-    // MARK: Sum
+    /// See: `Roll.reroll(savingDiceAt:)`
+    func reroll(savingDiceAt positions: Int...) throws -> Roll {
+        return try reroll(savingDiceAt: positions)
+    }
+}
 
+// MARK: - Sum
+
+extension Roll {
+
+    /// - Parameters:
+    ///     - die: The `Die` that should be summed.
+    /// - Returns: The sum of the provided `die` in the roll.
     func sum(of die: Die) -> Int {
         return dice.filter { $0 == die }.sum()
     }
 
+    /// - Returns: The sum of all dice in the roll.
     func sum() -> Int {
         return dice.sum()
     }
+}
 
-    // MARK: Counts
+// MARK: - Counts
 
+extension Roll {
+
+    /// - Returns: A dictionary where `key` is a `Die` and `value` is
+    ///            the count of that `Die` in the roll.
     func countPerDie() -> [Die: Int] {
         var counts = [Die: Int]()
         for die in dice {
@@ -62,20 +116,38 @@ struct Roll {
         return counts
     }
 
+    /// - Parameters:
+    ///     - die: The `Die` that should be counted.
+    /// - Returns: The count of the provided `die` in the roll.
     func count(of die: Die) -> Int {
         return countPerDie()[die] ?? 0
     }
 
+    /// - Parameters:
+    ///     - count: The required count to satisfy the condition.
+    ///     - die: The `Die` that should be counted.
+    /// - Returns: Whether the roll has at least `count` many `die`.
     func hasCount(_ count: Int, of die: Die) -> Bool {
         return self.count(of: die) >= count
     }
 
+    /// - Parameters:
+    ///     - count: The required count to satisfy the condition.
+    /// - Returns: Whether the roll has at least `count` many of the
+    ///            same type of any `Die`.
     func hasCountOfAKind(count: Int) -> Bool {
         return countPerDie().first { $0.value >= count } != nil
     }
+}
 
-    // MARK: Sequence Length
+// MARK: - Sequence Length
 
+extension Roll {
+
+    /// - Parameters:
+    ///     - length: The required length to satisfy the condition.
+    /// - Returns: Whether the roll has a numerical sequence of `Die`
+    ///            with a length of at least `lenth`.
     func hasSequence(ofLength length: Int) -> Bool {
         let ordered = Set(dice.map { $0.rawValue }).sorted()
         var currentSequenceLength = 1
@@ -100,7 +172,45 @@ struct Roll {
     }
 }
 
+// MARK: - Errors
+
+extension Roll {
+
+    /// Errors that can occur while creating a `Roll`.
+    enum Error: Swift.Error {
+
+        /// Indicates that an invalid number of dice was used.
+        /// Contains the invalid number.
+        case invalidNumberOfDice(Int)
+
+        /// Indicates that an invalid dice value was used.
+        /// Contains the invalid value.
+        case invalidDiceValue(Int)
+
+        /// Indicates that an invalid position was used.
+        /// Contains the invalid position.
+        case invalidPosition(Int)
+    }
+}
+
+// MARK: - Constants
+
+extension Roll {
+
+    /// Internal constants.
+    struct Constants {
+        private init() {}
+
+        /// The number of dice required in a roll.
+        static let requiredDiceCount = 5
+    }
+}
+
+// MARK: - Array Convenience
+
 extension Array where Element == Die {
+
+    /// - Returns: The sum of all dice in the array.
     func sum() -> Int {
         return self.map { $0.rawValue }.reduce(0, +)
     }
