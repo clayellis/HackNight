@@ -124,8 +124,8 @@ class RollTests: XCTestCase {
     }
 
     func testRollHasSequenceOfLength() throws {
-        let roll = try Roll(strict: 1, 1, 2, 3, 4)
-        XCTAssertTrue(roll.hasSequence(ofLength: 4))
+        let roll = try Roll(strict: 1, 1, 3, 4, 5)
+        XCTAssertTrue(roll.hasSequence(ofLength: 3))
         XCTAssertFalse(roll.hasSequence(ofLength: 5))
     }
 }
