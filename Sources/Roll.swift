@@ -112,7 +112,8 @@ extension Roll {
     /// - Returns: A dictionary where `key` is a `Die` and `value` is
     ///     the count of that `Die` in the roll.
     func countPerDie() -> [Die: Int] {
-        var counts = [Die: Int]()
+        let defaults = zip(Die.all, Array(repeating: 0, count: Die.all.count))
+        var counts = Dictionary(uniqueKeysWithValues: defaults)
         for die in dice {
             counts[die, default: 0] += 1
         }
