@@ -76,8 +76,10 @@ class ScoreTests: XCTestCase {
 }
 
 extension ScoreTests {
-    func assert(_ d1: Int, _ d2: Int, _ d3: Int, _ d4: Int, _ d5: Int, scoreEquals expectedScore: Int, using option: ScoreOption) throws {
+    func assert(_ d1: Int, _ d2: Int, _ d3: Int, _ d4: Int, _ d5: Int,
+                scoreEquals expectedScore: Int, using option: ScoreOption,
+                file: StaticString = #file, line: UInt = #line) throws {
         let roll = try Roll(d1, d2, d3, d4, d5)
-        XCTAssertEqual(option.score(for: roll), expectedScore)
+        XCTAssertEqual(option.score(for: roll), expectedScore, file: file, line: line)
     }
 }
