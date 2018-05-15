@@ -201,7 +201,7 @@ extension ScoreOption {
 extension ScoreOption {
 
     /// All possible values of `ScoreOption`.
-    static let all: [ScoreOption] = [
+    static let all: Set<ScoreOption> = [
         ones, twos, threes, fours, fives, sixes,
         threeOfAKind, fourOfAKind, fullHouse,
         smallStraight, largeStriaght,
@@ -209,12 +209,12 @@ extension ScoreOption {
     ]
 
     /// All `ScoreOption`s belonging to the upper section.
-    static let upperSection: [ScoreOption] = {
+    static let upperSection: Set<ScoreOption> = {
         return all.filter { $0.isUpperSection }
     }()
 
     /// All `ScoreOption`s belonging to the lower section.
-    static let lowerSection: [ScoreOption] = {
+    static let lowerSection: Set<ScoreOption> = {
         return all.filter { $0.isLowerSection }
     }()
 

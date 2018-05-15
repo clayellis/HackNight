@@ -16,7 +16,7 @@ enum Die: Int {
 extension Die {
 
     /// All possible values of `Die`.
-    static let all: [Die] = [.one, .two, .three, .four, .five, .six]
+    static let all: Set<Die> = [.one, .two, .three, .four, .five, .six]
 }
 
 extension Die {
