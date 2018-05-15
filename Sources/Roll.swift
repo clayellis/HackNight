@@ -8,6 +8,10 @@
 
 import Foundation
 
+
+// TODO: Write tests for Roll
+
+
 /// Represents a roll in the game.
 struct Roll {
 
@@ -15,9 +19,9 @@ struct Roll {
     let dice: [Die]
 
     /// Creates a new `Roll` using optional presets.
-    /// - Parameters:
-    ///     - presets: A dictionary of `Die` presets where `key` is the position of the preset,
-    ///                and `value` is the `Die` at the preset position.
+    ///
+    /// - Parameter presets: A dictionary of `Die` presets where `key` is the position of the preset,
+    ///     and `value` is the `Die` at the preset position.
     /// - Returns: A new `Roll` using the `presets` if present, otherwise an entirely random `Roll`.
     init(presets: [Int: Die] = [:]) {
         if presets.isEmpty {
@@ -36,8 +40,8 @@ struct Roll {
     }
 
     /// Creates a new `Roll` from a list of `Int`s.
-    /// - Parameters:
-    ///     - ints: A list of integers that represent individual `Dice`.
+    ///
+    /// - Parameter ints: A list of integers that represent individual `Dice`.
     /// - Throws: If `ints` contained too many or too few values, or if a value was invalid.
     /// - Returns: A new `Roll` using the list of integers.
     init(_ ints: Int...) throws {
@@ -62,8 +66,8 @@ struct Roll {
 extension Roll {
 
     /// Creates a new `Roll`, optionally saving the dice at the given positions.
-    /// - Parameters:
-    ///     - positions: The positions of the dice that should not be re-rolled.
+    ///
+    /// - Parameter positions: The positions of the dice that should not be re-rolled.
     /// - Throws: If any of the positions were invalid.
     /// - Returns: A new `Roll`, optionally saving the dice at the given positions.
     func reroll(savingDiceAt positions: [Int] = []) throws -> Roll {
@@ -89,8 +93,7 @@ extension Roll {
 
 extension Roll {
 
-    /// - Parameters:
-    ///     - die: The `Die` that should be summed.
+    /// - Parameter die: The `Die` that should be summed.
     /// - Returns: The sum of the provided `die` in the roll.
     func sum(of die: Die) -> Int {
         return dice.filter { $0 == die }.sum()
@@ -107,7 +110,7 @@ extension Roll {
 extension Roll {
 
     /// - Returns: A dictionary where `key` is a `Die` and `value` is
-    ///            the count of that `Die` in the roll.
+    ///     the count of that `Die` in the roll.
     func countPerDie() -> [Die: Int] {
         var counts = [Die: Int]()
         for die in dice {
@@ -116,8 +119,7 @@ extension Roll {
         return counts
     }
 
-    /// - Parameters:
-    ///     - die: The `Die` that should be counted.
+    /// - Parameter die: The `Die` that should be counted.
     /// - Returns: The count of the provided `die` in the roll.
     func count(of die: Die) -> Int {
         return countPerDie()[die] ?? 0
@@ -131,10 +133,9 @@ extension Roll {
         return self.count(of: die) >= count
     }
 
-    /// - Parameters:
-    ///     - count: The required count to satisfy the condition.
-    /// - Returns: Whether the roll has at least `count` many of the
-    ///            same type of any `Die`.
+    /// - Parameter count: The required count to satisfy the condition.
+    /// - Returns: Whether the roll has at least `count` many of
+    ///     same type of any `Die`.
     func hasCountOfAKind(count: Int) -> Bool {
         return countPerDie().first { $0.value >= count } != nil
     }
@@ -144,10 +145,9 @@ extension Roll {
 
 extension Roll {
 
-    /// - Parameters:
-    ///     - length: The required length to satisfy the condition.
+    /// - Parameter length: The required length to satisfy the condition.
     /// - Returns: Whether the roll has a numerical sequence of `Die`
-    ///            with a length of at least `lenth`.
+    ///     with a length of at least `lenth`.
     func hasSequence(ofLength length: Int) -> Bool {
         let ordered = Set(dice.map { $0.rawValue }).sorted()
         var currentSequenceLength = 1
