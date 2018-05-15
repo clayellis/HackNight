@@ -41,37 +41,49 @@ class ScoreTests: XCTestCase {
 
     func testThreeOfAKind() throws {
         try assert(1, 1, 1, 3, 5, scoreEquals: 11, using: .threeOfAKind)
-    }
-
-    func testThreeOfAKindZero() throws {
         try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: .threeOfAKind)
     }
 
     func testFourOfAKind() throws {
         try assert(3, 3, 3, 3, 2, scoreEquals: 14, using: .fourOfAKind)
+        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: .fourOfAKind)
     }
 
-    func testFourOfAKindZero() throws {
-        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: .fourOfAKind)
+    func testFullHouse() throws {
+        try assert(1, 1, 1, 2, 2, scoreEquals: 25, using: .fullHouse)
+        try assert(1, 1, 1, 1, 1, scoreEquals: 25, using: .fullHouse)
+        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: .fullHouse)
     }
 
     func testSmallStraight() throws {
         try assert(1, 2, 3, 4, 1, scoreEquals: 30, using: .smallStraight)
         try assert(5, 2, 3, 4, 5, scoreEquals: 30, using: .smallStraight)
         try assert(5, 3, 4, 5, 6, scoreEquals: 30, using: .smallStraight)
+        try assert(1, 1, 1, 1, 1, scoreEquals: 0, using: .smallStraight)
     }
 
     func testLargeStraight() throws {
         try assert(1, 2, 3, 4, 5, scoreEquals: 40, using: .largeStriaght)
         try assert(2, 3, 4, 5, 6, scoreEquals: 40, using: .largeStriaght)
+        try assert(1, 1, 1, 1, 1, scoreEquals: 0, using: .largeStriaght)
     }
 
     func testYahtzee() throws {
         try assert(5, 5, 5, 5, 5, scoreEquals: 50, using: .yahtzee)
+        try assert(1, 2, 3, 4, 5, scoreEquals: 0, using: .yahtzee)
     }
 
     func testChance() throws {
         try assert(1, 3, 4, 6, 2, scoreEquals: 16, using: .chance)
+    }
+
+    func testAll() {
+        XCTAssertEqual(ScoreOption.all, [.ones, .twos, .threes, .fours, .fives, .fives, .sixes, .threeOfAKind, .fourOfAKind, .fullHouse, .smallStraight, .largeStriaght, .yahtzee, .chance])
+    }
+
+    func testSections() {
+        XCTAssertEqual(ScoreOption.upperSection, [.ones, .twos, .threes, .fours, .fives, .sixes])
+        XCTAssertEqual(ScoreOption.lowerSection, [.threeOfAKind, .fourOfAKind, .fullHouse, .smallStraight, .largeStriaght, .yahtzee, .chance])
     }
 }
 
