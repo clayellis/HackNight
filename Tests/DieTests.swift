@@ -29,7 +29,14 @@ class DieTests: XCTestCase {
     }
 
     // TODO: Write a test the can test randomness of Die.random()
-//    func testRandom() {
-//
-//    }
+    func testRandom() {
+        let times = 100
+        var dice = [Die]()
+        while dice.count < times {
+            dice.append(Die.random())
+        }
+        // TODO: Calculate the standard deviation of the rolls
+        // The sd should fall in known range
+        // https://math.stackexchange.com/questions/2245194/what-is-the-standard-deviation-of-dice-rolling/2245228#2245228
+    }
 }
