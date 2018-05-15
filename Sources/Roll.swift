@@ -15,7 +15,7 @@ import Foundation
 /// Represents a roll in the game.
 struct Roll {
 
-    /// The dice which this `Roll` contains.
+    /// The dice which this roll contains.
     let dice: [Die]
 
     /// Creates a new `Roll` using optional presets.
@@ -203,15 +203,5 @@ extension Roll {
 
         /// The number of dice required in a roll.
         static let requiredDiceCount = 5
-    }
-}
-
-// MARK: - Array Convenience
-
-extension Array where Element == Die {
-
-    /// - Returns: The sum of all dice in the array.
-    func sum() -> Int {
-        return self.map { $0.rawValue }.reduce(0, +)
     }
 }
