@@ -23,7 +23,7 @@ extension Die {
 
     /// - Returns: A randome `Die`.
     static func random() -> Die {
-        let rand = Int(arc4random_uniform(UInt32(all.count)))
+        let rand = Int(arc4random_uniform(UInt32(all.count))) + 1
         return Die(rawValue: rand)!
     }
 }
