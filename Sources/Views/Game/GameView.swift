@@ -64,6 +64,8 @@ final class GameView: UIView {
 
         addAutoLayoutSubview(contentStack)
 
+        rollButton.setContentCompressionResistancePriority(.required, for: .vertical)
+
         NSLayoutConstraint.activate([
             contentStack.leftAnchor.constraint(equalTo: leftAnchor),
             contentStack.rightAnchor.constraint(equalTo: rightAnchor),

@@ -70,6 +70,9 @@ final class DiceView: UIView {
     }
 
     private func configureLayout() {
+        setContentCompressionResistancePriority(.required, for: .vertical)
+        setContentCompressionResistancePriority(.required, for: .horizontal)
+        
         layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         var constraints = [NSLayoutConstraint]()
 
