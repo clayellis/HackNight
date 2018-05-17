@@ -15,6 +15,8 @@ struct Styles {
 
     static let lightBackground = UIColor(hex: "F2F2F2")
 
+    static let selectionBlue = UIColor(hex: "187AED")
+
     static func applyShadow(to view: UIView) {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.10

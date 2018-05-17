@@ -157,7 +157,7 @@ final class DiceView: UIView {
     }
 
     private func updateSelectedAppearance() {
-        layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.lightGray.cgColor
+        layer.borderColor = isSelected ? Styles.selectionBlue.cgColor : UIColor.lightGray.cgColor
         layer.borderWidth = isSelected ? 3 : 1
     }
 }
