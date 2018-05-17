@@ -24,7 +24,10 @@ class DiceViewController: UIViewController {
         Die.all
             .sorted { $0.rawValue < $1.rawValue }
             .map { DiceView(dice: $0) }
-            .forEach(stack.addArrangedSubview)
+            .forEach {
+                $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedDice)))
+                stack.addArrangedSubview($0)
+            }
 
         view.addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -35,5 +38,19 @@ class DiceViewController: UIViewController {
             stack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             stack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ])
+    }
+
+    @objc func tappedDice(gesture: UITapGestureRecognizer) {
+        guard let diceView = gesture.view as? DiceView else {
+            return
+        }
+
+        diceView.dice = .random()
+        generateHapticFeedback()
+    }
+
+    func generateHapticFeedback() {
+        let feedback = UISelectionFeedbackGenerator()
+        feedback.selectionChanged()
     }
 }
