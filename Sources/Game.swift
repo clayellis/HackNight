@@ -9,11 +9,19 @@
 import Foundation
 
 struct Game {
-    var scores = [ScoreOption: Int]()
+    typealias Scores = [ScoreOption: Int]
+
+    var scores: Scores
 //    var currentTurn: Turn
 
     // NOTE: Maximum number of bonuses is 4
-    var yahtzeeBonusCount: Int
+    var yahtzeeBonusCount: Int {
+        didSet {
+            if yahtzeeBonusCount > 4 {
+                yahtzeeBonusCount = 4
+            }
+        }
+    }
 
     func calculateUpperSectionScore() -> Int {
         var total = scores
@@ -40,6 +48,11 @@ struct Game {
         let upper = calculateUpperSectionScore()
         let lower = calculateLowerSectionScore()
         return upper + lower
+    }
+
+    func isComplete() -> Bool {
+        // A game is copmlete once there is a score for each score option
+        return scores.values.count == ScoreOption.all.count
     }
 }
 
