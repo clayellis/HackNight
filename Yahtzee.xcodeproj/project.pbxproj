@@ -56,6 +56,7 @@
 		6FA35B9C20AA77C400F1BA9E /* Array+Sum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Sum.swift"; sourceTree = "<group>"; };
 		6FA35B9E20AA780B00F1BA9E /* Array+SumTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SumTests.swift"; sourceTree = "<group>"; };
 		6FA35BA020AA7A6000F1BA9E /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		6FA35BA220AA9A1400F1BA9E /* Notes.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = Notes.md; sourceTree = "<group>"; };
 		830CF47A20A412B60051E752 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		830CF48020A41F300051E752 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +82,7 @@
 		6F81E00F20A3ED8B0074E841 = {
 			isa = PBXGroup;
 			children = (
+				6FA35BA220AA9A1400F1BA9E /* Notes.md */,
 				6F81E04020A3EE720074E841 /* Support */,
 				6F81E03B20A3EE6B0074E841 /* Sources */,
 				6F81E04820A3EE750074E841 /* Tests */,
