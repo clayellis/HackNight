@@ -11,10 +11,21 @@ import UIKit
 /// A view for rendering a single dice.
 final class DiceView: UIView {
 
-    var dice: Die {
+    var dice: Die? {
         didSet {
             configureDots()
         }
+    }
+
+    var isSelected = false {
+        didSet {
+            updateSelectedAppearance()
+        }
+    }
+
+    override var intrinsicContentSize: CGSize {
+        let size: CGFloat = 50
+        return CGSize(width: size, height: size)
     }
 
     private enum DotPosition {
@@ -39,9 +50,9 @@ final class DiceView: UIView {
         return Dictionary(uniqueKeysWithValues: keysValues)
     }()
 
-    init(dice: Die, frame: CGRect = .zero) {
+    init(dice: Die?) {
         self.dice = dice
-        super.init(frame: frame)
+        super.init(frame: .zero)
         configureAppearance()
         configureLayout()
         configureDots()
@@ -101,6 +112,11 @@ final class DiceView: UIView {
     }
 
     private func configureDots() {
+        guard let dice = dice else {
+            showDots(at: [])
+            return
+        }
+
         switch dice {
         case .one:
             showDots(at: .middle)
@@ -138,9 +154,9 @@ final class DiceView: UIView {
         showDots(at: Set(positions))
     }
 
-    override var intrinsicContentSize: CGSize {
-        let size: CGFloat = 50
-        return CGSize(width: size, height: size)
+    private func updateSelectedAppearance() {
+        layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.lightGray.cgColor
+        layer.borderWidth = isSelected ? 3 : 1
     }
 }
 
