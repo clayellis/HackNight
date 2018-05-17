@@ -69,9 +69,6 @@ final class ScoreSheetView: UIView {
             }
 
             cell.accessibilityIdentifier = "Score Cell (\(option.description))"
-            cell.titleLabel.accessibilityIdentifier = "Title Label"
-            cell.scoreLabel.accessibilityIdentifier = "Score Label"
-            cell.stack.accessibilityIdentifier = "Score Cell Stack"
         }
     }
 }

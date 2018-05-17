@@ -51,6 +51,10 @@ class ScoreSheetCell: UIView {
 
         addAutoLayoutSubview(stack)
         stack.fill(self, withPriority: .required)
+
+        titleLabel.accessibilityIdentifier = "Title Label"
+        scoreLabel.accessibilityIdentifier = "Score Label"
+        stack.accessibilityIdentifier = "Score Cell Stack"
     }
 }
 
