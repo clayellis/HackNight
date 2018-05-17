@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// A view controller that displays all dice in a vertical stack.
+/// A view controller that displays all dice in a vertical stack. (For demo purposes.)
 class DiceViewController: UIViewController {
 
     override func viewDidLoad() {
