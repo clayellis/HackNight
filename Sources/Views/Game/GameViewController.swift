@@ -36,8 +36,6 @@ final class GameViewController: UIViewController {
 
     private func configureCells() {
         for cell in gameView.scoreSheet.cells.values {
-            cell.titleLabel.backgroundColor = .blue
-            cell.scoreLabel.backgroundColor = .green
             cell.scoreLabel.text = 0.description
         }
     }
