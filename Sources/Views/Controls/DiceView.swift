@@ -11,7 +11,11 @@ import UIKit
 /// A view for rendering a single dice.
 final class DiceView: UIView {
 
-    private let dice: Die
+    var dice: Die {
+        didSet {
+            configureDots()
+        }
+    }
 
     private enum DotPosition {
         case upperLeft
