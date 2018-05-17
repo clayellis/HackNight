@@ -15,3 +15,12 @@ extension Array where Element == Die {
         return self.map { $0.rawValue }.reduce(0, +)
     }
 }
+
+//extension Array {
+//
+//    /// Creates an array with `count` many elements created by the `closure` which is called anew for each element.
+//    init(repeatingUnique closure: @autoclosure () -> Element, count: Int) {
+//        self.init([0..<count].map { _ in closure() })
+//    }
+//
+//}
