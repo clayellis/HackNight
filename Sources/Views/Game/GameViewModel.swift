@@ -48,6 +48,5 @@ class GameViewModel: GameViewModeling {
 
     func handleSelectionsChange(from: Set<Int>, to: Set<Int>) {
         currentSelections = to
-        print("Selections: \(to.sorted())")
     }
 }
