@@ -58,7 +58,7 @@ final class GameView: UIView {
         bottomStack.axis = .vertical
         bottomStack.alignment = .fill
         bottomStack.distribution = .fillProportionally
-        bottomStack.spacing = 15
+        bottomStack.spacing = 10
         bottomStack.addArrangedSubview(rollView)
         bottomStack.addArrangedSubview(rollButton)
 
