@@ -46,7 +46,7 @@ final class GameView: UIView {
         contentStack.alignment = .fill
         contentStack.distribution = .fillProportionally
         contentStack.spacing = 20
-        contentStack.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        contentStack.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         contentStack.isLayoutMarginsRelativeArrangement = true
 
         let bottomWrapper = StackViewWrapper(bottomStack)

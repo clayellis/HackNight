@@ -14,7 +14,10 @@ protocol GameViewModelDelegate: class {
 
 protocol GameViewModeling: class {
     var delegate: GameViewModelDelegate? { get set }
+
+    var title: String { get }
     var rollButtonTitle: String { get }
+
     func handleRollTapped()
     func handleSelectionsChange(from: Set<Int>, to: Set<Int>)
 }
@@ -24,8 +27,11 @@ class GameViewModel: GameViewModeling {
     weak var delegate: GameViewModelDelegate?
 
     var currentRoll: Roll?
-
     var currentSelections = Set<Int>()
+
+    var title: String {
+        return "Yahtzee"
+    }
 
     var rollButtonTitle: String {
         return "Roll"

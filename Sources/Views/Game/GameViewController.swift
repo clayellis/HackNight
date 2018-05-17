@@ -29,6 +29,7 @@ final class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = viewModel.title
         gameView.rollView.delegate = self
         configureCells()
         configureButtons()

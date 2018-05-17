@@ -18,9 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let gameViewModel = GameViewModel()
         let root = GameViewController(viewModel: gameViewModel)
 //        let root = ViewController()
+        let navigationController = UINavigationController(rootViewController: root)
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = root
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 
         return true
