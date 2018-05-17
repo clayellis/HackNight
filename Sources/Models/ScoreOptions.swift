@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Upper Section
 
-enum ScoreOption {
+enum ScoreOption: Int {
 
     /// The sum of all ones in the roll.
     ///
@@ -231,6 +231,14 @@ extension ScoreOption {
     /// Whether this `ScoreOption` belongs to the lower section.
     var isLowerSection: Bool {
         return !isUpperSection
+    }
+}
+
+// MARK: - Comparable
+
+extension ScoreOption: Comparable {
+    static func < (lhs: ScoreOption, rhs: ScoreOption) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }
 
