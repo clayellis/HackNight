@@ -31,6 +31,12 @@
 		6FF20F5E20AD721300547330 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F5D20AD721300547330 /* GameViewModel.swift */; };
 		6FF20F6020AD729300547330 /* UIButton+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F5F20AD729300547330 /* UIButton+Extras.swift */; };
 		6FF20F6220AD73D600547330 /* UIImage+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6120AD73D600547330 /* UIImage+Extras.swift */; };
+		6FF20F6420ADD2EF00547330 /* ScoreSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6320ADD2EF00547330 /* ScoreSheetView.swift */; };
+		6FF20F6620ADDC7F00547330 /* UIView+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6520ADDC7F00547330 /* UIView+Extras.swift */; };
+		6FF20F6820ADE56600547330 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6720ADE56600547330 /* Styles.swift */; };
+		6FF20F6A20ADE6C800547330 /* UILayoutPriority+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6920ADE6C800547330 /* UILayoutPriority+Extras.swift */; };
+		6FF20F6C20ADE82100547330 /* StackViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6B20ADE82100547330 /* StackViewWrapper.swift */; };
+		6FF20F6E20ADEA4300547330 /* ScoreSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */; };
 		830CF47B20A412B60051E752 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF47A20A412B60051E752 /* HeaderView.swift */; };
 		830CF48120A41F300051E752 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF48020A41F300051E752 /* MainView.swift */; };
 /* End PBXBuildFile section */
@@ -73,6 +79,12 @@
 		6FF20F5D20AD721300547330 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		6FF20F5F20AD729300547330 /* UIButton+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extras.swift"; sourceTree = "<group>"; };
 		6FF20F6120AD73D600547330 /* UIImage+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extras.swift"; sourceTree = "<group>"; };
+		6FF20F6320ADD2EF00547330 /* ScoreSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSheetView.swift; sourceTree = "<group>"; };
+		6FF20F6520ADDC7F00547330 /* UIView+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extras.swift"; sourceTree = "<group>"; };
+		6FF20F6720ADE56600547330 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		6FF20F6920ADE6C800547330 /* UILayoutPriority+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutPriority+Extras.swift"; sourceTree = "<group>"; };
+		6FF20F6B20ADE82100547330 /* StackViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewWrapper.swift; sourceTree = "<group>"; };
+		6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSheetCell.swift; sourceTree = "<group>"; };
 		830CF47A20A412B60051E752 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		830CF48020A41F300051E752 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +166,8 @@
 			children = (
 				6FD4617520AD4042005283EF /* DiceView.swift */,
 				6FD4617B20AD679B005283EF /* RollView.swift */,
+				6FF20F6320ADD2EF00547330 /* ScoreSheetView.swift */,
+				6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -185,6 +199,8 @@
 				6FA35B9C20AA77C400F1BA9E /* Array+Extras.swift */,
 				6FF20F5F20AD729300547330 /* UIButton+Extras.swift */,
 				6FF20F6120AD73D600547330 /* UIImage+Extras.swift */,
+				6FF20F6520ADDC7F00547330 /* UIView+Extras.swift */,
+				6FF20F6920ADE6C800547330 /* UILayoutPriority+Extras.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -192,6 +208,7 @@
 		6FF20F5C20AD6F2900547330 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				6FF20F6B20ADE82100547330 /* StackViewWrapper.swift */,
 				830CF47A20A412B60051E752 /* HeaderView.swift */,
 				6F81E03C20A3EE6B0074E841 /* ViewController.swift */,
 				6FD4617720AD510B005283EF /* DiceViewController.swift */,
@@ -203,6 +220,7 @@
 		830CF47D20A4134B0051E752 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6FF20F6720ADE56600547330 /* Styles.swift */,
 				6FD4617420AD3FEB005283EF /* Controls */,
 				6FF20F5520AD6E2D00547330 /* Game */,
 				6FF20F5C20AD6F2900547330 /* Other */,
@@ -315,19 +333,25 @@
 				6FF20F5920AD6E3A00547330 /* GameViewController.swift in Sources */,
 				6FA35B9D20AA77C400F1BA9E /* Array+Extras.swift in Sources */,
 				6FD4617620AD4042005283EF /* DiceView.swift in Sources */,
+				6FF20F6420ADD2EF00547330 /* ScoreSheetView.swift in Sources */,
 				6FF20F6220AD73D600547330 /* UIImage+Extras.swift in Sources */,
 				6FF20F5E20AD721300547330 /* GameViewModel.swift in Sources */,
 				6F81E03F20A3EE6B0074E841 /* AppDelegate.swift in Sources */,
 				830CF47B20A412B60051E752 /* HeaderView.swift in Sources */,
+				6FF20F6A20ADE6C800547330 /* UILayoutPriority+Extras.swift in Sources */,
 				6F81E03E20A3EE6B0074E841 /* ViewController.swift in Sources */,
 				6FD4617820AD510B005283EF /* DiceViewController.swift in Sources */,
+				6FF20F6C20ADE82100547330 /* StackViewWrapper.swift in Sources */,
 				6F81E05120A3F5890074E841 /* Roll.swift in Sources */,
+				6FF20F6E20ADEA4300547330 /* ScoreSheetCell.swift in Sources */,
+				6FF20F6820ADE56600547330 /* Styles.swift in Sources */,
 				6F81E04F20A3F57A0074E841 /* Die.swift in Sources */,
 				830CF48120A41F300051E752 /* MainView.swift in Sources */,
 				6FD4617C20AD679B005283EF /* RollView.swift in Sources */,
 				6FF20F6020AD729300547330 /* UIButton+Extras.swift in Sources */,
 				6F81E05520A3F5BF0074E841 /* ScoreOptions.swift in Sources */,
 				6FF20F5720AD6E3600547330 /* GameView.swift in Sources */,
+				6FF20F6620ADDC7F00547330 /* UIView+Extras.swift in Sources */,
 				6F31E95120A483AE00DDF9F2 /* Game.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
