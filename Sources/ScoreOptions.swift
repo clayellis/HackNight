@@ -233,3 +233,26 @@ extension ScoreOption {
         return !isUpperSection
     }
 }
+
+// MARK: - Description
+
+extension ScoreOption: CustomStringConvertible {
+
+    var description: String {
+        switch self {
+        case .ones: return "Ones"
+        case .twos: return "Twos"
+        case .threes: return "Threes"
+        case .fours: return "Fours"
+        case .fives: return "Fives"
+        case .sixes: return "Sixes"
+        case .threeOfAKind: return "Three of a Kind"
+        case .fourOfAKind: return "Four of a Kind"
+        case .fullHouse: return "Full House"
+        case .smallStraight: return "Small Straight"
+        case .largeStriaght: return "Large Straight"
+        case .yahtzee: return "Yahtzee"
+        case .chance: return "Chance"
+        }
+    }
+}
