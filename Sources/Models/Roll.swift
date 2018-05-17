@@ -70,7 +70,7 @@ extension Roll {
     /// - Parameter positions: The positions of the dice that should not be re-rolled.
     /// - Throws: If any of the positions were invalid.
     /// - Returns: A new `Roll`, optionally saving the dice at the given positions.
-    func reroll(savingDiceAt positions: [Int] = []) throws -> Roll {
+    func reroll(savingDiceAt positions: Set<Int> = []) throws -> Roll {
         var presets = [Int: Die]()
         for position in positions {
             guard dice.indices.contains(position) else {
@@ -85,7 +85,7 @@ extension Roll {
 
     /// See: `Roll.reroll(savingDiceAt:)`
     func reroll(savingDiceAt positions: Int...) throws -> Roll {
-        return try reroll(savingDiceAt: positions)
+        return try reroll(savingDiceAt: Set(positions))
     }
 }
 
@@ -178,7 +178,7 @@ extension Roll {
 extension Roll {
 
     /// Errors that can occur while creating a `Roll`.
-    enum Error: Swift.Error {
+    enum Error: LocalizedError {
 
         /// Indicates that an invalid number of dice was used.
         /// Contains the invalid number.
@@ -191,6 +191,19 @@ extension Roll {
         /// Indicates that an invalid position was used.
         /// Contains the invalid position.
         case invalidPosition(Int)
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidNumberOfDice(let count):
+                return "Invalid number of dice: \(count)"
+
+            case .invalidDiceValue(let value):
+                return "Invalid dice value: \(value)"
+
+            case .invalidPosition(let position):
+                return "Invalid position: \(position)"
+            }
+        }
     }
 }
 
