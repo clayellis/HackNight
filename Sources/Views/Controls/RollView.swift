@@ -67,7 +67,7 @@ final class RollView: UIView {
 
     private func configureSubviews() {
         backgroundColor = .white
-        layer.cornerRadius = 10
+        layer.cornerRadius = Styles.elementCornerRadius
     }
 
     private func configureLayout() {
@@ -78,15 +78,8 @@ final class RollView: UIView {
         stackView.distribution = .equalSpacing
         diceViews.forEach(stackView.addArrangedSubview)
 
-        addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            stackView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor),
-            stackView.rightAnchor.constraint(equalTo: layoutMarginsGuide.rightAnchor),
-            stackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor)
-            ])
+        addAutoLayoutSubview(stackView)
+        stackView.fill(layoutMarginsGuide, withPriority: .stackViewWrapping)
     }
 
     private func configureGestureRecognizers() {

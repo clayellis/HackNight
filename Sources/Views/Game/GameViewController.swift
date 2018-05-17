@@ -30,7 +30,16 @@ final class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         gameView.rollView.delegate = self
+        configureCells()
         configureButtons()
+    }
+
+    private func configureCells() {
+        for cell in gameView.scoreSheet.cells.values {
+            cell.titleLabel.backgroundColor = .blue
+            cell.scoreLabel.backgroundColor = .green
+            cell.scoreLabel.text = 0.description
+        }
     }
 
     private func configureButtons() {

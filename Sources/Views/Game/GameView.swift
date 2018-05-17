@@ -10,9 +10,11 @@ import UIKit
 
 final class GameView: UIView {
 
+    let scoreSheet = ScoreSheetView()
     let rollView = RollView()
     let rollButton = UIButton()
 
+    private let contentStack = UIStackView()
     private let bottomStack = UIStackView()
 
     override init(frame: CGRect = .zero) {
@@ -29,32 +31,48 @@ final class GameView: UIView {
         backgroundColor = .lightGray
 
         rollButton.clipsToBounds = true
-        rollButton.layer.cornerRadius = 10
+        rollButton.layer.cornerRadius = Styles.elementCornerRadius
         rollButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         rollButton.setBackgroundColor(.black, forUIControlState: .normal)
         rollButton.setBackgroundColor(UIColor.black.withAlphaComponent(0.8), forUIControlState: .highlighted)
     }
 
     private func configureLayout() {
-        addSubview(bottomStack)
-        bottomStack.translatesAutoresizingMaskIntoConstraints = false
+        rollButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
+
+        contentStack.axis = .vertical
+        contentStack.alignment = .fill
+        contentStack.distribution = .fillProportionally
+        contentStack.spacing = 20
+        contentStack.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        contentStack.isLayoutMarginsRelativeArrangement = true
+
+        let bottomWrapper = StackViewWrapper(bottomStack)
+        bottomWrapper.accessibilityIdentifier = "Bottom Stack Wrapper"
+
+        contentStack.addArrangedSubview(scoreSheet)
+        contentStack.addArrangedSubview(bottomWrapper)
 
         bottomStack.axis = .vertical
         bottomStack.alignment = .fill
         bottomStack.distribution = .fillProportionally
         bottomStack.spacing = 15
-        bottomStack.isLayoutMarginsRelativeArrangement = true
-        bottomStack.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-
-        rollButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10)
-
         bottomStack.addArrangedSubview(rollView)
         bottomStack.addArrangedSubview(rollButton)
 
+        addAutoLayoutSubview(contentStack)
+
         NSLayoutConstraint.activate([
-            bottomStack.leftAnchor.constraint(equalTo: leftAnchor),
-            bottomStack.rightAnchor.constraint(equalTo: rightAnchor),
-            bottomStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            contentStack.leftAnchor.constraint(equalTo: leftAnchor),
+            contentStack.rightAnchor.constraint(equalTo: rightAnchor),
+            contentStack.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            contentStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
             ])
+
+        contentStack.accessibilityIdentifier = "Content Stack"
+        bottomStack.accessibilityIdentifier = "Bottom Stack"
+        scoreSheet.accessibilityIdentifier = "Score Sheet"
+        rollView.accessibilityIdentifier = "Roll View"
+        rollButton.accessibilityIdentifier = "Roll Button"
     }
 }

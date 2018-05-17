@@ -74,9 +74,8 @@ final class DiceView: UIView {
         var constraints = [NSLayoutConstraint]()
 
         for (position, dotView) in dots {
-            addSubview(dotView)
-            dotView.translatesAutoresizingMaskIntoConstraints = false
-
+            addAutoLayoutSubview(dotView)
+            
             switch position {
             case .upperLeft:
                 constraints.append(dotView.leftAnchor.constraint(equalTo: layoutMarginsGuide.leftAnchor))

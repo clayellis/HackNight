@@ -23,8 +23,7 @@ class MainView: UIView {
 
     func setupHeader() {
         header.backgroundColor = .red
-        self.addSubview(header)
-        header.translatesAutoresizingMaskIntoConstraints = false
+        addAutoLayoutSubview(header)
         NSLayoutConstraint.activate([
             header.widthAnchor.constraint(equalTo: self.widthAnchor),
             header.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.1),

@@ -29,8 +29,7 @@ class DiceViewController: UIViewController {
                 stack.addArrangedSubview($0)
             }
 
-        view.addSubview(stack)
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        view.addAutoLayoutSubview(stack)
 
         NSLayoutConstraint.activate([
             stack.leftAnchor.constraint(equalTo: view.leftAnchor),

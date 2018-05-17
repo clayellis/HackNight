@@ -17,9 +17,7 @@ class HeaderView: UIView {
         label.textAlignment = .center
         label.font = label.font.withSize(30)
 
-        self.addSubview(label)
-
-        label.translatesAutoresizingMaskIntoConstraints = false
+        addAutoLayoutSubview(label)
 
         NSLayoutConstraint.activate([
             label.widthAnchor.constraint(equalTo: self.widthAnchor),
