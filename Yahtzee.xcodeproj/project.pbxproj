@@ -37,6 +37,7 @@
 		6FF20F6A20ADE6C800547330 /* UILayoutPriority+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6920ADE6C800547330 /* UILayoutPriority+Extras.swift */; };
 		6FF20F6C20ADE82100547330 /* StackViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6B20ADE82100547330 /* StackViewWrapper.swift */; };
 		6FF20F6E20ADEA4300547330 /* ScoreSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */; };
+		6FF20F7020ADED2E00547330 /* UIColor+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6F20ADED2D00547330 /* UIColor+Extras.swift */; };
 		830CF47B20A412B60051E752 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF47A20A412B60051E752 /* HeaderView.swift */; };
 		830CF48120A41F300051E752 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF48020A41F300051E752 /* MainView.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		6FF20F6920ADE6C800547330 /* UILayoutPriority+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILayoutPriority+Extras.swift"; sourceTree = "<group>"; };
 		6FF20F6B20ADE82100547330 /* StackViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewWrapper.swift; sourceTree = "<group>"; };
 		6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSheetCell.swift; sourceTree = "<group>"; };
+		6FF20F6F20ADED2D00547330 /* UIColor+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extras.swift"; sourceTree = "<group>"; };
 		830CF47A20A412B60051E752 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		830CF48020A41F300051E752 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,6 +203,7 @@
 				6FF20F6120AD73D600547330 /* UIImage+Extras.swift */,
 				6FF20F6520ADDC7F00547330 /* UIView+Extras.swift */,
 				6FF20F6920ADE6C800547330 /* UILayoutPriority+Extras.swift */,
+				6FF20F6F20ADED2D00547330 /* UIColor+Extras.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				6F81E05520A3F5BF0074E841 /* ScoreOptions.swift in Sources */,
 				6FF20F5720AD6E3600547330 /* GameView.swift in Sources */,
 				6FF20F6620ADDC7F00547330 /* UIView+Extras.swift in Sources */,
+				6FF20F7020ADED2E00547330 /* UIColor+Extras.swift in Sources */,
 				6F31E95120A483AE00DDF9F2 /* Game.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
