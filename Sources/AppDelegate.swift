@@ -15,11 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        // Clay's
         let gameViewModel = GameViewModel()
         let root = GameViewController(viewModel: gameViewModel)
-
-        // Danny's
 //        let root = ViewController()
 
         window = UIWindow(frame: UIScreen.main.bounds)
