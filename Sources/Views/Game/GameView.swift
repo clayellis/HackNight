@@ -28,13 +28,15 @@ final class GameView: UIView {
     }
 
     private func configureSubviews() {
-        backgroundColor = .lightGray
+        backgroundColor = Styles.lightBackground
 
         rollButton.clipsToBounds = true
         rollButton.layer.cornerRadius = Styles.elementCornerRadius
         rollButton.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         rollButton.setBackgroundColor(.black, forUIControlState: .normal)
         rollButton.setBackgroundColor(UIColor.black.withAlphaComponent(0.8), forUIControlState: .highlighted)
+
+        [rollView, rollButton].forEach(Styles.applyShadow)
     }
 
     private func configureLayout() {

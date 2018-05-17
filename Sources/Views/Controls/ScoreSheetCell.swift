@@ -34,6 +34,8 @@ class ScoreSheetCell: UIView {
 
         scoreLabel.font = UIFont.systemFont(ofSize: 19, weight: .regular)
         scoreLabel.textAlignment = .center
+
+        Styles.applyShadow(to: self)
     }
 
     private func configureLayout() {
