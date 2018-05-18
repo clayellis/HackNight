@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ScoreSheetDelegate: class {
+    func scoreSheet(_ scoreSheet: ScoreSheetView, didSelect cell: ScoreSheetCell, with scoreOption: ScoreOption)
+}
+
 final class ScoreSheetView: UIView {
+
+    weak var delegate: ScoreSheetDelegate?
 
     private let columnsStack = UIStackView()
     private let leftColumn = UIStackView()
@@ -68,7 +74,17 @@ final class ScoreSheetView: UIView {
                 rightColumn.addArrangedSubview(cell)
             }
 
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedCell(gesture:))))
+
             cell.accessibilityIdentifier = "Score Cell (\(option.description))"
         }
+    }
+
+    @objc private func tappedCell(gesture: UITapGestureRecognizer) {
+        guard let scoreSheetCell = gesture.view as? ScoreOptionSheetCell else {
+            return
+        }
+
+        delegate?.scoreSheet(self, didSelect: scoreSheetCell, with: scoreSheetCell.scoreOption)
     }
 }
