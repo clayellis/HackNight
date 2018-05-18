@@ -9,7 +9,7 @@
 import UIKit
 
 protocol RollViewDelegate: class {
-    func rollView(_ rollView: RollView, didChangeSelectionsFrom from: Set<Int>, to: Set<Int>)
+    func rollView(_ rollView: RollView, didSelectDiceAt index: Int)
 }
 
 /// A view that represents a roll.
@@ -39,18 +39,6 @@ final class RollView: UIView {
             return results
         }
     }()
-
-    private var selectedDiceViews: Set<DiceView> {
-        return Set(diceViews.filter { $0.isSelected })
-    }
-
-    var selectedPositions: Set<Int> {
-        return Set(selectedDiceViews.compactMap { diceViews.index(of: $0) })
-    }
-
-    var selectedDice: Set<Die> {
-        return Set(selectedDiceViews.compactMap { $0.dice })
-    }
 
     init(roll: Roll? = nil) {
         self.roll = roll
@@ -89,11 +77,13 @@ final class RollView: UIView {
     }
 
     private func configureDice(with roll: Roll?) {
-        diceViews.forEach { $0.isUserInteractionEnabled = roll != nil }
-
         if let roll = roll {
             zip(roll.dice, diceViews).forEach { dice, diceView in
                 diceView.dice = dice
+            }
+        } else {
+            diceViews.forEach {
+                $0.dice = nil
             }
         }
     }
@@ -103,9 +93,16 @@ final class RollView: UIView {
             return
         }
 
-        let oldSelections = selectedPositions
-        diceView.isSelected = !diceView.isSelected
+        guard let index = diceViews.index(of: diceView) else {
+            return
+        }
 
-        delegate?.rollView(self, didChangeSelectionsFrom: oldSelections, to: selectedPositions)
+        delegate?.rollView(self, didSelectDiceAt: index)
+    }
+
+    func selectDice(at positions: Set<Int>) {
+        for (index, diceView) in diceViews.enumerated() {
+            diceView.isSelected = positions.contains(index)
+        }
     }
 }
