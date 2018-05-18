@@ -16,7 +16,6 @@ final class GameViewController: UIViewController {
     init(viewModel: GameViewModeling) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        viewModel.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -30,19 +29,30 @@ final class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = viewModel.title
-        gameView.rollView.delegate = self
+        configureDelegates()
         configureCells()
         configureButtons()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.handleViewDidAppear()
+    }
+
+    private func configureDelegates() {
+        viewModel.delegate = self
+        gameView.rollView.delegate = self
+        gameView.scoreSheet.delegate = self
+    }
+
     private func configureCells() {
-        for cell in gameView.scoreSheet.cells.values {
-            cell.scoreLabel.text = 0.description
-        }
+//        for cell in gameView.scoreSheet.cells.values {
+//            cell.scoreLabel.text = 0.description
+//        }
     }
 
     private func configureButtons() {
-        gameView.rollButton.setTitle(viewModel.rollButtonTitle, for: .normal)
+        gameView.rollButton.setTitle(viewModel.initialRollButtonTitle, for: .normal)
         gameView.rollButton.addTarget(self, action: #selector(rollTapped), for: .touchUpInside)
     }
 
@@ -52,14 +62,50 @@ final class GameViewController: UIViewController {
 
 }
 
-extension GameViewController: RollViewDelegate {
-    func rollView(_ rollView: RollView, didChangeSelectionsFrom from: Set<Int>, to: Set<Int>) {
-        viewModel.handleSelectionsChange(from: from, to: to)
-    }
-}
-
 extension GameViewController: GameViewModelDelegate {
     func rollDidChange(to newRoll: Roll?) {
         gameView.rollView.roll = newRoll
+    }
+
+    func selectionsDidChange(to selections: Set<Int>) {
+        gameView.rollView.selectDice(at: selections)
+    }
+
+    func updateRollButtonTitle(to newTitle: String) {
+        gameView.rollButton.setTitle(newTitle, for: .normal)
+    }
+
+    func enableRollButton(_ shouldEnable: Bool) {
+        gameView.rollButton.isEnabled = shouldEnable
+    }
+
+    func enableRollSelections(_ shouldEnable: Bool) {
+        gameView.rollView.isUserInteractionEnabled = shouldEnable
+    }
+
+    func refreshScoreOptions() {
+        for (option, cell) in gameView.scoreSheet.cells {
+            cell.scoreLabel.text = viewModel.scoreText(for: option)
+        }
+    }
+
+    func presentFinalScore(_ score: Int) {
+        let alert = UIAlertController(title: "Game Over", message: "Final Score: \(score)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "New Game", style: .default) { _ in
+            self.viewModel.handleNewGameTapped()
+        })
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+extension GameViewController: RollViewDelegate {
+    func rollView(_ rollView: RollView, didSelectDiceAt index: Int) {
+        viewModel.handleSelection(at: index)
+    }
+}
+
+extension GameViewController: ScoreSheetDelegate {
+    func scoreSheet(_ scoreSheet: ScoreSheetView, didSelect cell: ScoreSheetCell, with scoreOption: ScoreOption) {
+        viewModel.handleScoreOptionTapped(scoreOption: scoreOption)
     }
 }
