@@ -37,8 +37,6 @@
 		6FF20F6C20ADE82100547330 /* StackViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6B20ADE82100547330 /* StackViewWrapper.swift */; };
 		6FF20F6E20ADEA4300547330 /* ScoreSheetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */; };
 		6FF20F7020ADED2E00547330 /* UIColor+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF20F6F20ADED2D00547330 /* UIColor+Extras.swift */; };
-		6FFC638620AE35F700A16A59 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFC638520AE35F700A16A59 /* StateMachine.swift */; };
-		6FFC638820AE3F5B00A16A59 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FFC638720AE3F5B00A16A59 /* GameState.swift */; };
 		830CF47B20A412B60051E752 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF47A20A412B60051E752 /* HeaderView.swift */; };
 		830CF48120A41F300051E752 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830CF48020A41F300051E752 /* MainView.swift */; };
 /* End PBXBuildFile section */
@@ -87,8 +85,6 @@
 		6FF20F6B20ADE82100547330 /* StackViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackViewWrapper.swift; sourceTree = "<group>"; };
 		6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSheetCell.swift; sourceTree = "<group>"; };
 		6FF20F6F20ADED2D00547330 /* UIColor+Extras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extras.swift"; sourceTree = "<group>"; };
-		6FFC638520AE35F700A16A59 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
-		6FFC638720AE3F5B00A16A59 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		830CF47A20A412B60051E752 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		830CF48020A41F300051E752 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,8 +188,6 @@
 				6F81E04E20A3F57A0074E841 /* Die.swift */,
 				6F81E05020A3F5890074E841 /* Roll.swift */,
 				6F81E05420A3F5BF0074E841 /* ScoreOptions.swift */,
-				6FFC638720AE3F5B00A16A59 /* GameState.swift */,
-				6FFC638420AE35ED00A16A59 /* State Machine */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -221,14 +215,6 @@
 				830CF48020A41F300051E752 /* MainView.swift */,
 			);
 			path = Other;
-			sourceTree = "<group>";
-		};
-		6FFC638420AE35ED00A16A59 /* State Machine */ = {
-			isa = PBXGroup;
-			children = (
-				6FFC638520AE35F700A16A59 /* StateMachine.swift */,
-			);
-			path = "State Machine";
 			sourceTree = "<group>";
 		};
 		830CF47D20A4134B0051E752 /* Views */ = {
@@ -359,7 +345,6 @@
 				6F81E05120A3F5890074E841 /* Roll.swift in Sources */,
 				6FF20F6E20ADEA4300547330 /* ScoreSheetCell.swift in Sources */,
 				6FF20F6820ADE56600547330 /* Styles.swift in Sources */,
-				6FFC638820AE3F5B00A16A59 /* GameState.swift in Sources */,
 				6F81E04F20A3F57A0074E841 /* Die.swift in Sources */,
 				830CF48120A41F300051E752 /* MainView.swift in Sources */,
 				6FD4617C20AD679B005283EF /* RollView.swift in Sources */,
@@ -368,7 +353,6 @@
 				6FF20F5720AD6E3600547330 /* GameView.swift in Sources */,
 				6FF20F6620ADDC7F00547330 /* UIView+Extras.swift in Sources */,
 				6FF20F7020ADED2E00547330 /* UIColor+Extras.swift in Sources */,
-				6FFC638620AE35F700A16A59 /* StateMachine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,9 +2,9 @@
 
 
 TODO:
-- Sort the sections
 - Animate the dice rolls
-- Make the score sheet cells tappable
+- Preview scores in the score sheet cells
+- Prevent the scores from being overridden
 
 
 
