@@ -1,5 +1,14 @@
 #  Notes
 
+
+TODO:
+- Sort the sections
+- Animate the dice rolls
+- Make the score sheet cells tappable
+
+
+
+
 Centralized state: ReSwift
  - Reactive
  - Normal
