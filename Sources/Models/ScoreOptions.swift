@@ -183,7 +183,7 @@ extension ScoreOption {
             }
 
         case .yahtzee:
-            if roll.hasCountOfAKind(count: 5) {
+            if roll.isYahtzee {
                 return 50
             } else {
                 return 0
