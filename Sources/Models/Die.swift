@@ -27,3 +27,18 @@ extension Die {
         return Die(rawValue: rand)!
     }
 }
+
+extension Die {
+
+    /// - Returns: The corresponding upper section score option.
+    var correspondingUpperSectionScoreOption: ScoreOption {
+        switch self {
+        case .one: return .ones
+        case .two: return .twos
+        case .three: return .threes
+        case .four: return .fours
+        case .five: return .fives
+        case .six: return .sixes
+        }
+    }
+}
