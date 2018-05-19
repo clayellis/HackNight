@@ -173,6 +173,17 @@ extension Roll {
     }
 }
 
+// MARK: - Yahtzee
+
+extension Roll {
+
+    /// - Returns: Whether the roll is a yahtzee.
+    var isYahtzee: Bool {
+        return hasCountOfAKind(count: Constants.requiredDiceCount)
+    }
+
+}
+
 // MARK: - Errors
 
 extension Roll {
