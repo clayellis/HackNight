@@ -15,6 +15,8 @@ protocol GameViewModelDelegate: class {
     func enableRollButton(_ shouldEnable: Bool)
     func enableRollSelections(_ shouldEnable: Bool)
     func refreshScoreOptions()
+    func focus(on scoreOption: ScoreOption)
+    func removeFocus()
 
     func presentFinalScore(_ score: Int)
 }
@@ -72,13 +74,14 @@ class GameViewModel: GameViewModeling {
         }
     }
 
-    // TODO: We need to take the bonuses into account
     private var yahtzeeBonusCount: Int = 0 {
         didSet {
-            if yahtzeeBonusCount > 4 {
-                yahtzeeBonusCount = 4
-            }
+            // TODO: Determine how to display the bonus to the user
         }
+    }
+
+    private func hasScore(for scoreOption: ScoreOption) -> Bool {
+        return scores[scoreOption] != nil
     }
 }
 
@@ -106,7 +109,6 @@ private extension GameViewModel {
             // Move the game forward to the first roll
             state = .rollOne
 
-
         case .rollOne:
             delegate?.updateRollButtonTitle(to: "Roll (3)")
 
@@ -122,6 +124,7 @@ private extension GameViewModel {
             delegate?.enableRollButton(false)
 
         case .chooseScoreOption:
+            delegate?.removeFocus()
             if isComplete() {
                 state = .finishedGame
             } else {
@@ -207,6 +210,22 @@ extension GameViewModel {
 
         default:
             break
+        }
+
+        let roll = currentRoll!
+
+        // If the roll was a yahtzee, and yahtzee has already been chosen...
+        if roll.isYahtzee, hasScore(for: .yahtzee) {
+            // ... increment the yahtzee bonus count
+            yahtzeeBonusCount += 1
+
+            // The corresponding upper section score option must be chosen if it hasn't already been filled
+            let correspondingOption = roll.dice[0].correspondingUpperSectionScoreOption
+            if !hasScore(for: correspondingOption) {
+                delegate?.focus(on: correspondingOption)
+            }
+        } else {
+            delegate?.removeFocus()
         }
     }
 
