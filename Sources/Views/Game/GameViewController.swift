@@ -89,6 +89,14 @@ extension GameViewController: GameViewModelDelegate {
         }
     }
 
+    func focus(on scoreOption: ScoreOption) {
+        gameView.scoreSheet.focus(on: [scoreOption])
+    }
+
+    func removeFocus() {
+        gameView.scoreSheet.focus(on: ScoreOption.all)
+    }
+
     func presentFinalScore(_ score: Int) {
         let alert = UIAlertController(title: "Game Over", message: "Final Score: \(score)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "New Game", style: .default) { _ in
