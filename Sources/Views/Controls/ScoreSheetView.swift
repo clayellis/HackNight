@@ -87,4 +87,19 @@ final class ScoreSheetView: UIView {
 
         delegate?.scoreSheet(self, didSelect: scoreSheetCell, with: scoreSheetCell.scoreOption)
     }
+
+    func focus(on options: Set<ScoreOption>) {
+        if options.isEmpty {
+            setCellsEnabled(true, for: ScoreOption.all)
+        }
+
+        let others = ScoreOption.all.subtracting(options)
+        setCellsEnabled(true, for: options)
+        setCellsEnabled(false, for: others)
+    }
+
+    private func setCellsEnabled(_ isEnabled: Bool, for options: Set<ScoreOption>) {
+        options.compactMap { cells[$0] }
+            .forEach { $0.isEnabled = isEnabled }
+    }
 }

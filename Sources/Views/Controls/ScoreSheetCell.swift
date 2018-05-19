@@ -14,6 +14,12 @@ class ScoreSheetCell: UIView {
     let titleLabel = UILabel()
     let scoreLabel = UILabel()
 
+    var isEnabled: Bool = true {
+        didSet {
+            updateEnabledAppearance()
+        }
+    }
+
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         configureSubviews()
@@ -57,6 +63,11 @@ class ScoreSheetCell: UIView {
         titleLabel.accessibilityIdentifier = "Title Label"
         scoreLabel.accessibilityIdentifier = "Score Label"
         stack.accessibilityIdentifier = "Score Cell Stack"
+    }
+
+    private func updateEnabledAppearance() {
+        isUserInteractionEnabled = isEnabled
+        alpha = isEnabled ? 1 : 0.5
     }
 }
 
