@@ -13,6 +13,7 @@ final class GameView: UIView {
     let scoreSheet = ScoreSheetView()
     let rollView = RollView()
     let rollButton = UIButton()
+    let newGameButton = UIBarButtonItem()
 
     private let contentStack = UIStackView()
     private let bottomStack = UIStackView()
