@@ -10,6 +10,8 @@ import UIKit
 
 class ScoreSheetCell: UIView {
 
+    let type: ScoreSheetCellType
+
     fileprivate let stack = UIStackView()
     let titleLabel = UILabel()
     let scoreLabel = UILabel()
@@ -20,8 +22,9 @@ class ScoreSheetCell: UIView {
         }
     }
 
-    override init(frame: CGRect = .zero) {
-        super.init(frame: frame)
+    init(type: ScoreSheetCellType) {
+        self.type = type
+        super.init(frame: .zero)
         configureSubviews()
         configureLayout()
     }
@@ -34,11 +37,14 @@ class ScoreSheetCell: UIView {
         backgroundColor = .white
         layer.cornerRadius = Styles.elementCornerRadius
 
-        titleLabel.font = UIFont.systemFont(ofSize: 19, weight: .medium)
+        let fontSize: CGFloat = 16
+
+        titleLabel.text = type.description
+        titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
         titleLabel.numberOfLines = 2
         titleLabel.adjustsFontSizeToFitWidth = true
 
-        scoreLabel.font = UIFont.systemFont(ofSize: 19, weight: .regular)
+        scoreLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         scoreLabel.textAlignment = .center
 
         Styles.applyShadow(to: self)
@@ -70,59 +76,3 @@ class ScoreSheetCell: UIView {
         alpha = isEnabled ? 1 : 0.5
     }
 }
-
-final class ScoreOptionSheetCell: ScoreSheetCell {
-
-    let scoreOption: ScoreOption
-
-    init(scoreOption: ScoreOption) {
-        self.scoreOption = scoreOption
-        super.init(frame: .zero)
-        titleLabel.text = scoreOption.description
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

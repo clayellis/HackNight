@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ScoreSheetDelegate: class {
-    func scoreSheet(_ scoreSheet: ScoreSheetView, didSelect cell: ScoreSheetCell, with scoreOption: ScoreOption)
+    func scoreSheet(_ scoreSheet: ScoreSheetView, didSelect cell: ScoreSheetCell)
 }
 
 final class ScoreSheetView: UIView {
@@ -20,8 +20,14 @@ final class ScoreSheetView: UIView {
     private let leftColumn = UIStackView()
     private let rightColumn = UIStackView()
 
-    let cells: [ScoreOption: ScoreSheetCell] = {
-        let keysValues = ScoreOption.all.map { ($0, ScoreOptionSheetCell(scoreOption: $0)) }
+    let cells: [ScoreSheetCellType: ScoreSheetCell] = {
+        var keysValues = ScoreOption.all
+            .map { ScoreSheetCellType.scoreOption($0) }
+            .map { ($0, ScoreSheetCell(type: $0)) }
+
+        keysValues.append((.upperSectionBonus, ScoreSheetCell(type: .upperSectionBonus)))
+        keysValues.append((.grandTotal, ScoreSheetCell(type: .grandTotal)))
+
         return Dictionary(uniqueKeysWithValues: keysValues)
     }()
 
@@ -68,7 +74,7 @@ final class ScoreSheetView: UIView {
     private func configureCells() {
         for (option, cell) in cells.sorted(by: { $0.key < $1.key }) {
 
-            if option.isUpperSection {
+            if option.isInUpperSection {
                 leftColumn.addArrangedSubview(cell)
             } else {
                 rightColumn.addArrangedSubview(cell)
@@ -81,11 +87,11 @@ final class ScoreSheetView: UIView {
     }
 
     @objc private func tappedCell(gesture: UITapGestureRecognizer) {
-        guard let scoreSheetCell = gesture.view as? ScoreOptionSheetCell else {
+        guard let cell = gesture.view as? ScoreSheetCell else {
             return
         }
 
-        delegate?.scoreSheet(self, didSelect: scoreSheetCell, with: scoreSheetCell.scoreOption)
+        delegate?.scoreSheet(self, didSelect: cell)
     }
 
     func focus(on options: Set<ScoreOption>) {
@@ -99,7 +105,7 @@ final class ScoreSheetView: UIView {
     }
 
     private func setCellsEnabled(_ isEnabled: Bool, for options: Set<ScoreOption>) {
-        options.compactMap { cells[$0] }
+        options.compactMap { cells[.scoreOption($0)] }
             .forEach { $0.isEnabled = isEnabled }
     }
 }
