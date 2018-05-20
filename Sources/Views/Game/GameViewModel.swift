@@ -8,6 +8,17 @@
 
 import Foundation
 
+enum GameState {
+    case startGame
+    case startTurn
+    case rollOne
+    case rollTwo
+    case rollThree
+    case noRollsLeft
+    case chooseScoreOption
+    case finishedGame
+}
+
 protocol GameViewModelDelegate: class {
     func rollDidChange(to newRoll: Roll?)
     func selectionsDidChange(to selections: Set<Int>)
@@ -15,7 +26,7 @@ protocol GameViewModelDelegate: class {
     func enableRollButton(_ shouldEnable: Bool)
     func enableRollSelections(_ shouldEnable: Bool)
     func refreshScoreOptions()
-    func focus(on scoreOption: ScoreOption)
+    func focus(on scoreOptions: Set<ScoreOption>)
     func removeFocus()
 
     func presentFinalScore(_ score: Int)
@@ -25,13 +36,17 @@ protocol GameViewModeling: class {
     var delegate: GameViewModelDelegate? { get set }
 
     var title: String { get }
-    var initialRollButtonTitle: String { get }
-    func scoreText(for option: ScoreOption) -> String?
+    var newGameButtonTitle: String { get }
+    var canSelectDice: Bool { get }
+    var isRollButtonEnabled: Bool { get }
+    var rollButtonTitle: String { get }
+
+    func scoreText(forType type: ScoreSheetCellType) -> String?
 
     func handleViewDidAppear()
     func handleRollTapped()
     func handleSelection(at index: Int)
-    func handleScoreOptionTapped(scoreOption: ScoreOption)
+    func handleScoreSheetCellTapped(ofType type: ScoreSheetCellType)
     func handleNewGameTapped()
 }
 
@@ -39,49 +54,100 @@ class GameViewModel: GameViewModeling {
 
     weak var delegate: GameViewModelDelegate?
 
-    private enum GameState {
-        case startGame
-        case startTurn
-        case rollOne
-        case rollTwo
-        case rollThree
-        case noRollsLeft
-        case chooseScoreOption
-        case finishedGame
+    var title: String {
+        return "Yahtzee"
     }
 
-    private var state = GameState.startGame {
+    var newGameButtonTitle: String {
+        return "New Game"
+    }
+
+    var state = GameState.startGame {
         didSet {
             handleStateChange(state)
         }
     }
 
-    private var scores = [ScoreOption: Int]() {
+    var scores = [ScoreOption: Int]() {
         didSet {
             delegate?.refreshScoreOptions()
         }
     }
 
-    private var currentRoll: Roll? {
+    var currentRoll: Roll? {
         didSet {
             delegate?.rollDidChange(to: currentRoll)
         }
     }
 
-    private var currentSelections = Set<Int>() {
+    var currentSelections = Set<Int>() {
         didSet {
             delegate?.selectionsDidChange(to: currentSelections)
         }
     }
 
-    private var yahtzeeBonusCount: Int = 0 {
+    var canSelectDice: Bool = false {
+        didSet {
+            delegate?.enableRollSelections(canSelectDice)
+        }
+    }
+
+    var yahtzeeBonusCount: Int = 0 {
         didSet {
             // TODO: Determine how to display the bonus to the user
         }
     }
 
-    private func hasScore(for scoreOption: ScoreOption) -> Bool {
+    var currentEnabledOptions: Set<ScoreOption> = ScoreOption.all {
+        didSet {
+            if currentEnabledOptions == ScoreOption.all {
+                delegate?.removeFocus()
+            } else {
+                delegate?.focus(on: currentEnabledOptions)
+            }
+        }
+    }
+
+    var isRollButtonEnabled: Bool = true {
+        didSet {
+            delegate?.enableRollButton(isRollButtonEnabled)
+        }
+    }
+
+    var rollButtonTitle: String = "Roll" {
+        didSet {
+            delegate?.updateRollButtonTitle(to: rollButtonTitle)
+        }
+    }
+
+    var finalScore: Int? {
+        didSet {
+            if let score = finalScore {
+                delegate?.presentFinalScore(score)
+            }
+        }
+    }
+
+    func hasScore(for scoreOption: ScoreOption) -> Bool {
         return scores[scoreOption] != nil
+    }
+
+    func scoreText(forType type: ScoreSheetCellType) -> String? {
+        switch type {
+        case .scoreOption(let option):
+            return scores[option]?.description
+
+        case .upperSectionBonus:
+            let score = calculateUpperSectionRawScore()
+            if score >= Constants.upperSectionBonusThreshold {
+                return Constants.upperSectionBonus.description
+            } else {
+                return "\(score)/\(Constants.upperSectionBonusThreshold)"
+            }
+
+        case .grandTotal:
+            return calculateGrandTotalScore().description
+        }
     }
 }
 
@@ -90,8 +156,6 @@ class GameViewModel: GameViewModeling {
 private extension GameViewModel {
 
     private func handleStateChange(_ newState: GameState) {
-        print("Game Entered State: \(newState)")
-
         switch newState {
         case .startGame:
             scores = [:]
@@ -104,27 +168,27 @@ private extension GameViewModel {
         case .startTurn:
             currentSelections = []
             currentRoll = nil
-            delegate?.enableRollButton(true)
+            isRollButtonEnabled = true
 
             // Move the game forward to the first roll
             state = .rollOne
 
         case .rollOne:
-            delegate?.updateRollButtonTitle(to: "Roll (3)")
+            rollButtonTitle = "Roll (3)"
 
         case .rollTwo:
-            delegate?.enableRollSelections(true)
-            delegate?.updateRollButtonTitle(to: "Roll (2)")
+            canSelectDice = true
+            rollButtonTitle = "Roll (2)"
 
         case .rollThree:
-            delegate?.updateRollButtonTitle(to: "Roll (1)")
+            rollButtonTitle = "Roll (1)"
 
         case .noRollsLeft:
-            delegate?.updateRollButtonTitle(to: "Choose Score Option")
-            delegate?.enableRollButton(false)
+            rollButtonTitle = "Choose Score Option"
+            isRollButtonEnabled = false
 
         case .chooseScoreOption:
-            delegate?.removeFocus()
+            currentEnabledOptions = ScoreOption.all
             if isComplete() {
                 state = .finishedGame
             } else {
@@ -132,9 +196,7 @@ private extension GameViewModel {
             }
 
         case .finishedGame:
-            let finalScore = calculateGrandTotalScore()
-            delegate?.presentFinalScore(finalScore)
-            print("Final Score: \(finalScore)")
+            finalScore = calculateGrandTotalScore()
         }
     }
 }
@@ -143,20 +205,24 @@ private extension GameViewModel {
 
 private extension GameViewModel {
 
-    func calculateUpperSectionScore() -> Int {
-        var total = scores
-            .filter { $0.key.isUpperSection }
+    func calculateUpperSectionRawScore() -> Int {
+        return scores
+            .filter { $0.key.isInUpperSection }
             .map { $0.value }
             .reduce(0, +)
-        if total > 63 {
-            total += 35
+    }
+
+    func calculateUpperSectionScore() -> Int {
+        var score = calculateUpperSectionRawScore()
+        if score >= Constants.upperSectionBonusThreshold {
+            score += Constants.upperSectionBonus
         }
-        return total
+        return score
     }
 
     func calculateLowerSectionScore() -> Int {
         var total = scores
-            .filter { $0.key.isLowerSection }
+            .filter { $0.key.isInLowerSection }
             .map { $0.value }
             .reduce(0, +)
         let yahtzeeBonusScore = min(yahtzeeBonusCount, 4) * 100
@@ -222,10 +288,10 @@ extension GameViewModel {
             // The corresponding upper section score option must be chosen if it hasn't already been filled
             let correspondingOption = roll.dice[0].correspondingUpperSectionScoreOption
             if !hasScore(for: correspondingOption) {
-                delegate?.focus(on: correspondingOption)
+                currentEnabledOptions = [correspondingOption]
             }
         } else {
-            delegate?.removeFocus()
+            currentEnabledOptions = ScoreOption.all
         }
     }
 
@@ -236,8 +302,12 @@ extension GameViewModel {
             currentSelections.insert(index)
         }
     }
-    
-    func handleScoreOptionTapped(scoreOption: ScoreOption) {
+
+    func handleScoreSheetCellTapped(ofType type: ScoreSheetCellType) {
+        guard case let .scoreOption(scoreOption) = type else {
+            return
+        }
+
         guard let roll = currentRoll else {
             return
         }
@@ -255,19 +325,13 @@ extension GameViewModel {
     }
 }
 
-// MARK: - View Data
-
 extension GameViewModel {
 
-    var title: String {
-        return "Yahtzee"
-    }
+    struct Constants {
+        private init() {}
 
-    var initialRollButtonTitle: String {
-        return "Roll"
-    }
+        static let upperSectionBonusThreshold = 63
 
-    func scoreText(for option: ScoreOption) -> String? {
-        return scores[option]?.description ?? " "
+        static let upperSectionBonus = 35
     }
 }
