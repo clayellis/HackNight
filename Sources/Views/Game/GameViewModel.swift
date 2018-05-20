@@ -207,7 +207,7 @@ private extension GameViewModel {
 
     func calculateUpperSectionRawScore() -> Int {
         return scores
-            .filter { $0.key.isInUpperSection }
+            .filter { $0.key.belongsTo(section: .upper) }
             .map { $0.value }
             .reduce(0, +)
     }
@@ -222,7 +222,7 @@ private extension GameViewModel {
 
     func calculateLowerSectionScore() -> Int {
         var total = scores
-            .filter { $0.key.isInLowerSection }
+            .filter { $0.key.belongsTo(section: .lower) }
             .map { $0.value }
             .reduce(0, +)
         let yahtzeeBonusScore = min(yahtzeeBonusCount, 4) * 100

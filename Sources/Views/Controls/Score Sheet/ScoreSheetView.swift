@@ -74,7 +74,7 @@ final class ScoreSheetView: UIView {
     private func configureCells() {
         for (option, cell) in cells.sorted(by: { $0.key < $1.key }) {
 
-            if option.isInUpperSection {
+            if option.belongsTo(section: .upper) {
                 leftColumn.addArrangedSubview(cell)
             } else {
                 rightColumn.addArrangedSubview(cell)

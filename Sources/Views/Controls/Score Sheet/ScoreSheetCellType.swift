@@ -23,15 +23,18 @@ enum ScoreSheetCellType: Hashable {
 
 extension ScoreSheetCellType: Sectioned {
 
-    var isInUpperSection: Bool {
-        switch self {
-        case .scoreOption(let option):
-            return option.isInUpperSection
+    func belongsTo(section: Section) -> Bool {
+        switch (self, section) {
+        case (.scoreOption(let option), _):
+            return option.belongsTo(section: section)
 
-        case .upperSectionBonus:
+        case (.upperSectionBonus, .upper):
             return true
 
-        case .grandTotal:
+        case (.grandTotal, .lower):
+            return true
+
+        default:
             return false
         }
     }
@@ -59,13 +62,13 @@ extension ScoreSheetCellType: Comparable {
         case (.scoreOption(let lhsOption), .scoreOption(let rhsOption)):
             return lhsOption < rhsOption
 
-            // Upper section options come before the bonus,
+        // Upper section options come before the bonus,
         // but the bonus comes before lower section
         case (.scoreOption(let option), .upperSectionBonus):
-            return option.isInUpperSection
+            return option.belongsTo(section: .upper)
 
         case (.upperSectionBonus, .scoreOption(let option)):
-            return option.isInLowerSection
+            return option.belongsTo(section: .lower)
 
         // The grand total comes after all others
         case (.grandTotal, _):

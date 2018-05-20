@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F17782A20B1D991009BDB06 /* ScoreSheetCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F17782920B1D991009BDB06 /* ScoreSheetCellType.swift */; };
+		6F17782C20B1DAD2009BDB06 /* Sectioned.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F17782B20B1DAD2009BDB06 /* Sectioned.swift */; };
+		6F17782E20B1E2BF009BDB06 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F17782D20B1E2BF009BDB06 /* Section.swift */; };
 		6F31E94F20A40C8300DDF9F2 /* ScoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31E94E20A40C8300DDF9F2 /* ScoreTests.swift */; };
 		6F81E03E20A3EE6B0074E841 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E03C20A3EE6B0074E841 /* ViewController.swift */; };
 		6F81E03F20A3EE6B0074E841 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F81E03D20A3EE6B0074E841 /* AppDelegate.swift */; };
@@ -52,6 +55,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F17782920B1D991009BDB06 /* ScoreSheetCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreSheetCellType.swift; sourceTree = "<group>"; };
+		6F17782B20B1DAD2009BDB06 /* Sectioned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sectioned.swift; sourceTree = "<group>"; };
+		6F17782D20B1E2BF009BDB06 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		6F31E94E20A40C8300DDF9F2 /* ScoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTests.swift; sourceTree = "<group>"; };
 		6F81E01820A3ED8B0074E841 /* Yahtzee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yahtzee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F81E02C20A3ED8C0074E841 /* YahtzeeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YahtzeeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +113,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F17782820B1D984009BDB06 /* Score Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				6FF20F6320ADD2EF00547330 /* ScoreSheetView.swift */,
+				6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */,
+				6F17782920B1D991009BDB06 /* ScoreSheetCellType.swift */,
+			);
+			path = "Score Sheet";
+			sourceTree = "<group>";
+		};
 		6F81E00F20A3ED8B0074E841 = {
 			isa = PBXGroup;
 			children = (
@@ -166,8 +182,7 @@
 			children = (
 				6FD4617520AD4042005283EF /* DiceView.swift */,
 				6FD4617B20AD679B005283EF /* RollView.swift */,
-				6FF20F6320ADD2EF00547330 /* ScoreSheetView.swift */,
-				6FF20F6D20ADEA4300547330 /* ScoreSheetCell.swift */,
+				6F17782820B1D984009BDB06 /* Score Sheet */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -187,7 +202,9 @@
 			children = (
 				6F81E04E20A3F57A0074E841 /* Die.swift */,
 				6F81E05020A3F5890074E841 /* Roll.swift */,
+				6F17782B20B1DAD2009BDB06 /* Sectioned.swift */,
 				6F81E05420A3F5BF0074E841 /* ScoreOptions.swift */,
+				6F17782D20B1E2BF009BDB06 /* Section.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -336,6 +353,8 @@
 				6FF20F6420ADD2EF00547330 /* ScoreSheetView.swift in Sources */,
 				6FF20F6220AD73D600547330 /* UIImage+Extras.swift in Sources */,
 				6FF20F5E20AD721300547330 /* GameViewModel.swift in Sources */,
+				6F17782C20B1DAD2009BDB06 /* Sectioned.swift in Sources */,
+				6F17782E20B1E2BF009BDB06 /* Section.swift in Sources */,
 				6F81E03F20A3EE6B0074E841 /* AppDelegate.swift in Sources */,
 				830CF47B20A412B60051E752 /* HeaderView.swift in Sources */,
 				6FF20F6A20ADE6C800547330 /* UILayoutPriority+Extras.swift in Sources */,
@@ -348,6 +367,7 @@
 				6F81E04F20A3F57A0074E841 /* Die.swift in Sources */,
 				830CF48120A41F300051E752 /* MainView.swift in Sources */,
 				6FD4617C20AD679B005283EF /* RollView.swift in Sources */,
+				6F17782A20B1D991009BDB06 /* ScoreSheetCellType.swift in Sources */,
 				6FF20F6020AD729300547330 /* UIButton+Extras.swift in Sources */,
 				6F81E05520A3F5BF0074E841 /* ScoreOptions.swift in Sources */,
 				6FF20F5720AD6E3600547330 /* GameView.swift in Sources */,

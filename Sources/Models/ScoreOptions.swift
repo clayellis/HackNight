@@ -10,6 +10,7 @@ import Foundation
 
 // MARK: - Upper Section
 
+/// Types of scoring options.
 enum ScoreOption: Int {
 
     /// The sum of all ones in the roll.
@@ -210,20 +211,20 @@ extension ScoreOption: Sectioned {
 
     /// All `ScoreOption`s belonging to the upper section.
     static let upperSection: Set<ScoreOption> = {
-        return all.filter { $0.isInUpperSection }
+        return all.filter { $0.belongsTo(section: .upper) }
     }()
 
     /// All `ScoreOption`s belonging to the lower section.
     static let lowerSection: Set<ScoreOption> = {
-        return all.filter { $0.isInLowerSection }
+        return all.filter { $0.belongsTo(section: .lower) }
     }()
 
-    var isInUpperSection: Bool {
+    func belongsTo(section: Section) -> Bool {
         switch self {
         case .ones, .twos, .threes, .fours, .fives, .sixes:
-            return true
+            return section == .upper
         default:
-            return false
+            return section == .lower
         }
     }
 }
