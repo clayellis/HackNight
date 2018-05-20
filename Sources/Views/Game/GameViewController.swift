@@ -32,6 +32,7 @@ final class GameViewController: UIViewController {
         configureDelegates()
         configureCells()
         configureButtons()
+        configureInitialStates()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -52,17 +53,31 @@ final class GameViewController: UIViewController {
     }
 
     private func configureButtons() {
-        gameView.rollButton.setTitle(viewModel.initialRollButtonTitle, for: .normal)
+        navigationItem.leftBarButtonItem = gameView.newGameButton
+        gameView.newGameButton.title = viewModel.newGameButtonTitle
+        gameView.newGameButton.target = self
+        gameView.newGameButton.action = #selector(newGameTapped)
+
+        gameView.rollButton.setTitle(viewModel.rollButtonTitle, for: .normal)
         gameView.rollButton.addTarget(self, action: #selector(rollTapped), for: .touchUpInside)
+    }
+
+    private func configureInitialStates() {
+        gameView.rollButton.isEnabled = viewModel.isRollButtonEnabled
+        gameView.rollView.isUserInteractionEnabled = viewModel.canSelectDice
+    }
+
+    @objc private func newGameTapped() {
+        viewModel.handleNewGameTapped()
     }
 
     @objc private func rollTapped() {
         viewModel.handleRollTapped()
     }
-
 }
 
 extension GameViewController: GameViewModelDelegate {
+
     func rollDidChange(to newRoll: Roll?) {
         gameView.rollView.roll = newRoll
     }
@@ -84,13 +99,13 @@ extension GameViewController: GameViewModelDelegate {
     }
 
     func refreshScoreOptions() {
-        for (option, cell) in gameView.scoreSheet.cells {
-            cell.scoreLabel.text = viewModel.scoreText(for: option)
+        for (_, cell) in gameView.scoreSheet.cells {
+            cell.scoreLabel.text = viewModel.scoreText(forType: cell.type)
         }
     }
 
-    func focus(on scoreOption: ScoreOption) {
-        gameView.scoreSheet.focus(on: [scoreOption])
+    func focus(on scoreOptions: Set<ScoreOption>) {
+        gameView.scoreSheet.focus(on: scoreOptions)
     }
 
     func removeFocus() {
@@ -113,7 +128,7 @@ extension GameViewController: RollViewDelegate {
 }
 
 extension GameViewController: ScoreSheetDelegate {
-    func scoreSheet(_ scoreSheet: ScoreSheetView, didSelect cell: ScoreSheetCell, with scoreOption: ScoreOption) {
-        viewModel.handleScoreOptionTapped(scoreOption: scoreOption)
+    func scoreSheet(_ scoreSheet: ScoreSheetView, didSelect cell: ScoreSheetCell) {
+        viewModel.handleScoreSheetCellTapped(ofType: cell.type)
     }
 }
