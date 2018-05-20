@@ -198,7 +198,7 @@ extension ScoreOption {
 
 // MARK: - Sections
 
-extension ScoreOption {
+extension ScoreOption: Sectioned {
 
     /// All possible values of `ScoreOption`.
     static let all: Set<ScoreOption> = [
@@ -210,27 +210,21 @@ extension ScoreOption {
 
     /// All `ScoreOption`s belonging to the upper section.
     static let upperSection: Set<ScoreOption> = {
-        return all.filter { $0.isUpperSection }
+        return all.filter { $0.isInUpperSection }
     }()
 
     /// All `ScoreOption`s belonging to the lower section.
     static let lowerSection: Set<ScoreOption> = {
-        return all.filter { $0.isLowerSection }
+        return all.filter { $0.isInLowerSection }
     }()
 
-    /// Whether this `ScoreOption` belongs to the upper section.
-    var isUpperSection: Bool {
+    var isInUpperSection: Bool {
         switch self {
         case .ones, .twos, .threes, .fours, .fives, .sixes:
             return true
         default:
             return false
         }
-    }
-
-    /// Whether this `ScoreOption` belongs to the lower section.
-    var isLowerSection: Bool {
-        return !isUpperSection
     }
 }
 
