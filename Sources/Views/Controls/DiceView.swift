@@ -98,7 +98,6 @@ final class DiceView: UIView {
         self.dice = dice
         super.init(frame: .zero)
         configureAppearance()
-        configureLayout()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -111,8 +110,6 @@ final class DiceView: UIView {
         layer.borderWidth = 1
         layer.cornerRadius = 10
     }
-
-    private func configureLayout() {}
 
     private func updateSelectedAppearance() {
         layer.borderColor = isSelected ? Styles.selectionBlue.cgColor : UIColor.lightGray.cgColor
