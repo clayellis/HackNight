@@ -24,10 +24,6 @@ class DieTests: XCTestCase {
         XCTAssertNil(Die(rawValue: 42))
     }
 
-    func testAll() {
-        XCTAssertEqual(Die.all, [.one, .two, .three, .four, .five, .six])
-    }
-
     // TODO: Write a test the can test randomness of Die.random()
     func testRandom() {
         let times = 100

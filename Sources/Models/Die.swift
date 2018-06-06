@@ -9,22 +9,15 @@
 import Foundation
 
 /// The face value of a six-sided die.
-enum Die: Int {
+enum Die: Int, CaseIterable {
     case one = 1, two, three, four, five, six
 }
 
 extension Die {
 
-    /// All possible values of `Die`.
-    static let all: Set<Die> = [.one, .two, .three, .four, .five, .six]
-}
-
-extension Die {
-
-    /// - Returns: A randome `Die`.
+    /// - Returns: A random `Die`.
     static func random() -> Die {
-        let rand = Int(arc4random_uniform(UInt32(all.count))) + 1
-        return Die(rawValue: rand)!
+        return Die.allCases.randomElement()!
     }
 }
 
@@ -40,5 +33,11 @@ extension Die {
         case .five: return .fives
         case .six: return .sixes
         }
+    }
+}
+
+extension Die: Comparable {
+    static func < (lhs: Die, rhs: Die) -> Bool {
+        return lhs.rawValue < rhs.rawValue
     }
 }

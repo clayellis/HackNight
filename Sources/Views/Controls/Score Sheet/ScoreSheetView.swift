@@ -21,7 +21,7 @@ final class ScoreSheetView: UIView {
     private let rightColumn = UIStackView()
 
     let cells: [ScoreSheetCellType: ScoreSheetCell] = {
-        var keysValues = ScoreOption.all
+        var keysValues = ScoreOption.allCases
             .map { ScoreSheetCellType.scoreOption($0) }
             .map { ($0, ScoreSheetCell(type: $0)) }
 
@@ -96,10 +96,10 @@ final class ScoreSheetView: UIView {
 
     func focus(on options: Set<ScoreOption>) {
         if options.isEmpty {
-            setCellsEnabled(true, for: ScoreOption.all)
+            setCellsEnabled(true, for: Set(ScoreOption.allCases))
         }
 
-        let others = ScoreOption.all.subtracting(options)
+        let others = Set(ScoreOption.allCases).subtracting(options)
         setCellsEnabled(true, for: options)
         setCellsEnabled(false, for: others)
     }

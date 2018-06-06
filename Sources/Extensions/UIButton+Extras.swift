@@ -10,14 +10,14 @@ import UIKit
 
 extension UIButton {
     /// Set the button's background color for a control state
-    public func setBackgroundColor(_ color: UIColor, forUIControlState state: UIControlState) {
+    public func setBackgroundColor(_ color: UIColor, forUIControlState state: UIControl.State) {
         self.setBackgroundImage(UIImage(color: color), for: state)
     }
 
     /// Returns the background color used for a button state.
     /// - parameter state: The state that uses the background color. Possible values are described in UIControlState.
     /// - returns: The background color used for the specified state.
-    public func backgroundColor(for state: UIControlState) -> UIColor? {
+    public func backgroundColor(for state: UIControl.State) -> UIColor? {
         let image = backgroundImage(for: state)
         return image?.color(at: .zero)
     }

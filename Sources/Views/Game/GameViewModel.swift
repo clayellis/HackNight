@@ -98,9 +98,9 @@ class GameViewModel: GameViewModeling {
         }
     }
 
-    var currentEnabledOptions: Set<ScoreOption> = ScoreOption.all {
+    var currentEnabledOptions: Set<ScoreOption> = Set(ScoreOption.allCases) {
         didSet {
-            if currentEnabledOptions == ScoreOption.all {
+            if currentEnabledOptions == Set(ScoreOption.allCases) {
                 delegate?.removeFocus()
             } else {
                 delegate?.focus(on: currentEnabledOptions)
@@ -188,7 +188,7 @@ private extension GameViewModel {
             isRollButtonEnabled = false
 
         case .chooseScoreOption:
-            currentEnabledOptions = ScoreOption.all
+            currentEnabledOptions = Set(ScoreOption.allCases)
             if isComplete() {
                 state = .finishedGame
             } else {
@@ -238,7 +238,7 @@ private extension GameViewModel {
 
     func isComplete() -> Bool {
         // A game is copmlete once there is a score for each score option
-        return scores.values.count == ScoreOption.all.count
+        return scores.values.count == Set(ScoreOption.allCases).count
     }
 }
 
@@ -291,7 +291,7 @@ extension GameViewModel {
                 currentEnabledOptions = [correspondingOption]
             }
         } else {
-            currentEnabledOptions = ScoreOption.all
+            currentEnabledOptions = Set(ScoreOption.allCases)
         }
     }
 

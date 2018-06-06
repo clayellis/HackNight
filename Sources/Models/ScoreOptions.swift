@@ -199,24 +199,16 @@ extension ScoreOption {
 
 // MARK: - Sections
 
-extension ScoreOption: Sectioned {
-
-    /// All possible values of `ScoreOption`.
-    static let all: Set<ScoreOption> = [
-        ones, twos, threes, fours, fives, sixes,
-        threeOfAKind, fourOfAKind, fullHouse,
-        smallStraight, largeStriaght,
-        yahtzee, chance
-    ]
+extension ScoreOption: Sectioned, CaseIterable {
 
     /// All `ScoreOption`s belonging to the upper section.
     static let upperSection: Set<ScoreOption> = {
-        return all.filter { $0.belongsTo(section: .upper) }
+        return Set(allCases.filter { $0.belongsTo(section: .upper) })
     }()
 
     /// All `ScoreOption`s belonging to the lower section.
     static let lowerSection: Set<ScoreOption> = {
-        return all.filter { $0.belongsTo(section: .lower) }
+        return Set(allCases.filter { $0.belongsTo(section: .lower) })
     }()
 
     func belongsTo(section: Section) -> Bool {

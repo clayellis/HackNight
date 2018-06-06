@@ -21,8 +21,8 @@ class DiceViewController: UIViewController {
         stack.alignment = .center
         stack.distribution = .equalSpacing
 
-        Die.all
-            .sorted { $0.rawValue < $1.rawValue }
+        Die.allCases
+            .sorted()
             .map { DiceView(dice: $0) }
             .forEach {
                 $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedDice)))

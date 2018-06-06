@@ -109,7 +109,7 @@ extension GameViewController: GameViewModelDelegate {
     }
 
     func removeFocus() {
-        gameView.scoreSheet.focus(on: ScoreOption.all)
+        gameView.scoreSheet.focus(on: Set(ScoreOption.allCases))
     }
 
     func presentFinalScore(_ score: Int) {
