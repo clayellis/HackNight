@@ -28,72 +28,6 @@ final class DiceView: UIView {
         return CGSize(width: size, height: size)
     }
 
-    private enum DotPosition: CaseIterable {
-        case upperLeft
-        case upperRight
-        case lowerLeft
-        case lowerRight
-        case middle
-        case middleLeft
-        case middleRight
-
-        enum Row {
-            case upper
-            case middle
-            case lower
-        }
-
-        var row: Row {
-            switch self {
-            case .upperLeft, .upperRight:
-                return .upper
-            case .middleLeft, .middle, .middleRight:
-                return .middle
-            case .lowerLeft, .lowerRight:
-                return .lower
-            }
-        }
-
-        enum Column {
-            case left
-            case middle
-            case right
-        }
-
-        var column: Column {
-            switch self {
-            case .upperLeft, .middleLeft, .lowerLeft:
-                return .left
-            case .middle:
-                return .middle
-            case .upperRight, .middleRight, .lowerRight:
-                return .right
-            }
-        }
-
-        static func positions(for dice: Die) -> Set<DotPosition> {
-            switch dice {
-            case .one:
-                return [.middle]
-
-            case .two:
-                return [.lowerLeft, .upperRight]
-
-            case .three:
-                return [.lowerLeft, .middle, .upperRight]
-
-            case .four:
-                return [.upperLeft, .upperRight, .lowerLeft, .lowerRight]
-
-            case .five:
-                return [.upperLeft, .upperRight, .middle, .lowerLeft, .lowerRight]
-
-            case .six:
-                return [.upperLeft, .upperRight, .middleLeft, .middleRight, .lowerLeft, .lowerRight]
-            }
-        }
-    }
-
     init(dice: Die?) {
         self.dice = dice
         super.init(frame: .zero)
@@ -169,6 +103,75 @@ final class DiceView: UIView {
             rect.size.width = rect.size.height
 
             context.fillEllipse(in: rect)
+        }
+    }
+}
+
+private extension DiceView {
+
+    enum DotPosition: CaseIterable {
+        case upperLeft
+        case upperRight
+        case lowerLeft
+        case lowerRight
+        case middle
+        case middleLeft
+        case middleRight
+
+        enum Row {
+            case upper
+            case middle
+            case lower
+        }
+
+        var row: Row {
+            switch self {
+            case .upperLeft, .upperRight:
+                return .upper
+            case .middleLeft, .middle, .middleRight:
+                return .middle
+            case .lowerLeft, .lowerRight:
+                return .lower
+            }
+        }
+
+        enum Column {
+            case left
+            case middle
+            case right
+        }
+
+        var column: Column {
+            switch self {
+            case .upperLeft, .middleLeft, .lowerLeft:
+                return .left
+            case .middle:
+                return .middle
+            case .upperRight, .middleRight, .lowerRight:
+                return .right
+            }
+        }
+
+        static func positions(for dice: Die) -> Set<DotPosition> {
+            switch dice {
+            case .one:
+                return [.middle]
+
+            case .two:
+                return [.lowerLeft, .upperRight]
+
+            case .three:
+                return [.lowerLeft, .middle, .upperRight]
+
+            case .four:
+                return [.upperLeft, .upperRight, .lowerLeft, .lowerRight]
+
+            case .five:
+                return [.upperLeft, .upperRight, .middle, .lowerLeft, .lowerRight]
+
+            case .six:
+                return [.upperLeft, .upperRight, .middleLeft, .middleRight, .lowerLeft, .lowerRight]
+            }
         }
     }
 }
