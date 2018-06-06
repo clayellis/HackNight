@@ -126,8 +126,13 @@ final class DiceView: UIView {
 
         let paddedRect = rect.inset(by: UIEdgeInsets(allEdges: rect.height * 0.15))
         let spacing = paddedRect.height * 0.08
-        let dH = (paddedRect.height + spacing * 2) / 3
-        let dW = (paddedRect.width + spacing * 2) / 3
+
+        func d(of x: CGFloat) -> CGFloat {
+            return (x + spacing * 2) / 3
+        }
+
+        let dH = d(of: paddedRect.height)
+        let dW = d(of: paddedRect.width)
 
         for position in DotPosition.positions(for: dice) {
             let top: CGFloat
