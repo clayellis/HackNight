@@ -9,11 +9,20 @@
 import Foundation
 
 /// Types of sections.
-enum Section {
+enum Section: CaseIterable {
 
     /// The upper section type.
     case upper
 
     /// The lower section type.
     case lower
+}
+
+extension Section: Comparable {
+    static func < (lhs: Section, rhs: Section) -> Bool {
+        switch (lhs, rhs) {
+        case (.upper, .lower): return true
+        default: return false
+        }
+    }
 }
