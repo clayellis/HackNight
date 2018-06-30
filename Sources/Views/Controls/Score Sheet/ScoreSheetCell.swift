@@ -85,7 +85,16 @@ class ScoreSheetCell: UICollectionViewCell {
 
         set {
             super.isHighlighted = newValue
-            contentView.backgroundColor = newValue ? .lightGray : .white
+            let highlighting = newValue
+            contentView.backgroundColor = highlighting ? .lightGray : .white
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.beginFromCurrentState, .allowUserInteraction], animations: {
+                if highlighting {
+                    let scale: CGFloat = 0.985
+                    self.transform = self.transform.scaledBy(x: scale, y: scale)
+                } else {
+                    self.transform = .identity
+                }
+            }, completion: nil)
         }
     }
 }
