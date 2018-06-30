@@ -1,5 +1,5 @@
 //
-//  ReuseIdentifier.swift
+//  UICollectionViewCell+Extras.swift
 //  Yahtzee
 //
 //  Created by Clay Ellis on 6/6/18.

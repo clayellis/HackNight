@@ -46,6 +46,7 @@ final class ScoreSheetView: UIView {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.alwaysBounceVertical = false
+        collectionView.forceDelaysContentTouches(false)
     }
 
     private func configureLayout() {

@@ -77,4 +77,15 @@ class ScoreSheetCell: UICollectionViewCell {
         isUserInteractionEnabled = isEnabled
         alpha = isEnabled ? 1 : 0.5
     }
+
+    override var isHighlighted: Bool {
+        get {
+            return super.isHighlighted
+        }
+
+        set {
+            super.isHighlighted = newValue
+            contentView.backgroundColor = newValue ? .lightGray : .white
+        }
+    }
 }

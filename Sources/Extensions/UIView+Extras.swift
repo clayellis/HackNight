@@ -42,3 +42,33 @@ extension UIView {
     }
 
 }
+
+extension UIView {
+    public var allSubviews: [UIView] {
+        var all = subviews
+        for subview in all {
+            all.append(contentsOf: subview.allSubviews)
+        }
+        return all
+    }
+
+    public func subviewWithClassName(_ className: String) -> UIView? {
+        return allSubviews.first { type(of: $0).description() == className }
+    }
+
+    public func subviewsWithClassName(_ className: String) -> [UIView] {
+        return allSubviews.filter { type(of: $0).description() == className }
+    }
+
+    public func subviewWithClassType<T>(_ classType: T.Type) -> T? {
+        return allSubviews.first { $0 is T } as? T
+    }
+
+    public func subviewsWithClassType<T>(_ classType: T.Type) -> [T] {
+        return allSubviews.compactMap { $0 as? T }
+    }
+
+    public func indexOfSubview(_ subview: UIView) -> Int? {
+        return subviews.index(of: subview)
+    }
+}
