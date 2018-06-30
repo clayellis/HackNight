@@ -77,10 +77,6 @@ class ScoreTests: XCTestCase {
         try assert(1, 3, 4, 6, 2, scoreEquals: 16, using: .chance)
     }
 
-    func testAll() {
-        XCTAssertEqual(ScoreOption.all, [.ones, .twos, .threes, .fours, .fives, .fives, .sixes, .threeOfAKind, .fourOfAKind, .fullHouse, .smallStraight, .largeStriaght, .yahtzee, .chance])
-    }
-
     func testSections() {
         XCTAssertEqual(ScoreOption.upperSection, [.ones, .twos, .threes, .fours, .fives, .sixes])
         XCTAssertEqual(ScoreOption.lowerSection, [.threeOfAKind, .fourOfAKind, .fullHouse, .smallStraight, .largeStriaght, .yahtzee, .chance])
