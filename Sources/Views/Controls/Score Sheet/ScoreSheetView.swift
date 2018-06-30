@@ -40,6 +40,7 @@ final class ScoreSheetView: UIView {
     }
 
     private func configureSubviews() {
+        collectionView.backgroundColor = .clear
         collectionView.register(ScoreSheetCell.self)
         collectionViewLayout.delegate = self
         collectionView.dataSource = self
