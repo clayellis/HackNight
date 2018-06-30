@@ -27,15 +27,7 @@ struct Roll {
         if presets.isEmpty {
             self.dice = (0 ..< Constants.requiredDiceCount).map { _ in Die.random() }
         } else {
-            var dice: [Die] = []
-            for i in 0 ..< Constants.requiredDiceCount {
-                if let presetDie = presets[i] {
-                    dice.append(presetDie)
-                } else {
-                    dice.append(Die.random())
-                }
-            }
-            self.dice = dice
+            self.dice = (0 ..< Constants.requiredDiceCount).map { presets[$0] ?? Die.random() }
         }
     }
 
@@ -49,15 +41,13 @@ struct Roll {
             throw Error.invalidNumberOfDice(ints.count)
         }
 
-        let dice: [Die] = try ints.map {
+        self.dice = try ints.map {
             guard let dice = Die(rawValue: $0) else {
                 throw Error.invalidDiceValue($0)
             }
 
             return dice
         }
-
-        self.dice = dice
     }
 }
 
