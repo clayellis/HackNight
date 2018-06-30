@@ -61,9 +61,12 @@ final class DiceView: UIView {
         let paddedRect = rect.inset(by: UIEdgeInsets(allEdges: rect.height * 0.15))
         let spacing = paddedRect.height * 0.08
 
+        /// - Parameter x: The side length of the entire dice view.
+        /// - Returns: The diameter of a single dot given a side length.
         func d(of x: CGFloat) -> CGFloat {
             return (x + spacing * 2) / 3
         }
+
 
         let dH = d(of: paddedRect.height)
         let dW = d(of: paddedRect.width)
@@ -72,13 +75,13 @@ final class DiceView: UIView {
             let top: CGFloat
             let bottom: CGFloat
             switch position.row {
-            case .upper:
+            case .top:
                 top = 0
                 bottom = dH * 2
             case .middle:
                 top = dH
                 bottom = dH
-            case .lower:
+            case .bottom:
                 top = dH * 2
                 bottom = 0
             }
@@ -110,28 +113,28 @@ final class DiceView: UIView {
 private extension DiceView {
 
     enum DotPosition: CaseIterable {
-        case upperLeft
-        case upperRight
-        case lowerLeft
-        case lowerRight
+        case topLeft
+        case topRight
+        case bottomLeft
+        case bottomRight
         case middle
         case middleLeft
         case middleRight
 
         enum Row {
-            case upper
+            case top
             case middle
-            case lower
+            case bottom
         }
 
         var row: Row {
             switch self {
-            case .upperLeft, .upperRight:
-                return .upper
+            case .topLeft, .topRight:
+                return .top
             case .middleLeft, .middle, .middleRight:
                 return .middle
-            case .lowerLeft, .lowerRight:
-                return .lower
+            case .bottomLeft, .bottomRight:
+                return .bottom
             }
         }
 
@@ -143,11 +146,11 @@ private extension DiceView {
 
         var column: Column {
             switch self {
-            case .upperLeft, .middleLeft, .lowerLeft:
+            case .topLeft, .middleLeft, .bottomLeft:
                 return .left
             case .middle:
                 return .middle
-            case .upperRight, .middleRight, .lowerRight:
+            case .topRight, .middleRight, .bottomRight:
                 return .right
             }
         }
@@ -158,19 +161,19 @@ private extension DiceView {
                 return [.middle]
 
             case .two:
-                return [.lowerLeft, .upperRight]
+                return [.bottomLeft, .topRight]
 
             case .three:
-                return [.lowerLeft, .middle, .upperRight]
+                return [.bottomLeft, .middle, .topRight]
 
             case .four:
-                return [.upperLeft, .upperRight, .lowerLeft, .lowerRight]
+                return [.topLeft, .topRight, .bottomLeft, .bottomRight]
 
             case .five:
-                return [.upperLeft, .upperRight, .middle, .lowerLeft, .lowerRight]
+                return [.topLeft, .topRight, .middle, .bottomLeft, .bottomRight]
 
             case .six:
-                return [.upperLeft, .upperRight, .middleLeft, .middleRight, .lowerLeft, .lowerRight]
+                return [.topLeft, .topRight, .middleLeft, .middleRight, .bottomLeft, .bottomRight]
             }
         }
     }

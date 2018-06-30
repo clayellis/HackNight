@@ -105,4 +105,12 @@ final class RollView: UIView {
             diceView.isSelected = positions.contains(index)
         }
     }
+
+    override var intrinsicContentSize: CGSize {
+        let diceSize = DiceView(dice: nil).intrinsicContentSize
+        let width = diceSize.width * CGFloat(Roll.Constants.requiredDiceCount) + layoutMargins.horizontal
+        let height = diceSize.height + layoutMargins.vertical
+        let size = CGSize(width: width, height: height)
+        return size
+    }
 }

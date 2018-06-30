@@ -16,26 +16,23 @@ final class ScoreSheetView: UIView {
 
     weak var delegate: ScoreSheetDelegate?
 
-    private let columnsStack = UIStackView()
-    private let leftColumn = UIStackView()
-    private let rightColumn = UIStackView()
+    var cells: [ScoreSheetCell] {
+        return collectionView.visibleCells.compactMap { $0 as? ScoreSheetCell }
+    }
 
-    let cells: [ScoreSheetCellType: ScoreSheetCell] = {
-        var keysValues = ScoreOption.allCases
-            .map { ScoreSheetCellType.scoreOption($0) }
-            .map { ($0, ScoreSheetCell(type: $0)) }
-
-        keysValues.append((.upperSectionBonus, ScoreSheetCell(type: .upperSectionBonus)))
-        keysValues.append((.grandTotal, ScoreSheetCell(type: .grandTotal)))
-
-        return Dictionary(uniqueKeysWithValues: keysValues)
+    lazy var data: [Section: [ScoreSheetCellType]] = {
+        let scoreOptionTypes = ScoreOption.allCases.map { ScoreSheetCellType.scoreOption($0) }
+        var cellTypes = scoreOptionTypes + [.upperSectionBonus, .grandTotal]
+        return Dictionary(grouping: cellTypes, by: { $0.belongsTo(section: .upper) ? .upper : .lower })
     }()
+
+    fileprivate lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout)
+    fileprivate lazy var collectionViewLayout = ColumnLayout()
 
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         configureSubviews()
         configureLayout()
-        configureCells()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -43,55 +40,16 @@ final class ScoreSheetView: UIView {
     }
 
     private func configureSubviews() {
-
+        collectionView.register(ScoreSheetCell.self)
+        collectionViewLayout.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.alwaysBounceVertical = false
     }
 
     private func configureLayout() {
-        columnsStack.axis = .horizontal
-        columnsStack.alignment = .fill
-        columnsStack.distribution = .fillEqually
-        columnsStack.spacing = 10
-
-        [leftColumn, rightColumn].forEach {
-            $0.axis = .vertical
-            $0.alignment = .fill
-            $0.distribution = .fillEqually
-            $0.spacing = 10
-
-            let wrapper = StackViewWrapper($0)
-            wrapper.accessibilityIdentifier = "Column Wrapper"
-            columnsStack.addArrangedSubview(wrapper)
-        }
-
-        addAutoLayoutSubview(columnsStack)
-        columnsStack.fill(self, withPriority: .stackViewWrapping)
-
-        columnsStack.accessibilityIdentifier = "Columns Stack"
-        leftColumn.accessibilityIdentifier = "Left Column Stack"
-        rightColumn.accessibilityIdentifier = "Right Column Stack"
-    }
-
-    private func configureCells() {
-        for (option, cell) in cells.sorted(by: { $0.key < $1.key }) {
-
-            if option.belongsTo(section: .upper) {
-                leftColumn.addArrangedSubview(cell)
-            } else {
-                rightColumn.addArrangedSubview(cell)
-            }
-
-            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedCell(gesture:))))
-
-            cell.accessibilityIdentifier = "Score Cell (\(option.description))"
-        }
-    }
-
-    @objc private func tappedCell(gesture: UITapGestureRecognizer) {
-        guard let cell = gesture.view as? ScoreSheetCell else {
-            return
-        }
-
-        delegate?.scoreSheet(self, didSelect: cell)
+        addAutoLayoutSubview(collectionView)
+        collectionView.fill(self)
     }
 
     func focus(on options: Set<ScoreOption>) {
@@ -105,7 +63,78 @@ final class ScoreSheetView: UIView {
     }
 
     private func setCellsEnabled(_ isEnabled: Bool, for options: Set<ScoreOption>) {
-        options.compactMap { cells[.scoreOption($0)] }
-            .forEach { $0.isEnabled = isEnabled }
+//        options.compactMap { cells[.scoreOption($0)] }
+//            .forEach { $0.isEnabled = isEnabled }
+    }
+
+    private func section(for section: Int) -> Section {
+        return data.keys.sorted()[section]
+    }
+
+    private func section(for indexPath: IndexPath) -> Section {
+        return section(for: indexPath.section)
+    }
+
+    private func scoreSheetCellType(at indexPath: IndexPath) -> ScoreSheetCellType {
+        return data[section(for: indexPath)]![indexPath.item]
+    }
+
+    private func scoreSheetCell(at indexPath: IndexPath) -> ScoreSheetCell? {
+        return collectionView.cellForItem(at: indexPath) as? ScoreSheetCell
+    }
+
+    func reload() {
+        collectionView.reloadData()
+    }
+
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: UIScreen.main.bounds.width, height: 300)
+    }
+}
+
+extension ScoreSheetView: UICollectionViewDataSource {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return data.keys.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return data[self.section(for: section)]!.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(ScoreSheetCell.self, for: indexPath)
+        let cellType = scoreSheetCellType(at: indexPath)
+        cell.type = cellType
+        return cell
+    }
+}
+
+extension ScoreSheetView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let scoreSheetCell = self.scoreSheetCell(at: indexPath) else {
+            return
+        }
+
+        delegate?.scoreSheet(self, didSelect: scoreSheetCell)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+
+    }
+}
+
+extension ScoreSheetView: ColumnLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, layout: ColumnLayout, heightForItemAt indexPath: IndexPath) -> CGFloat {
+        let itemCount = CGFloat(self.collectionView(collectionView, numberOfItemsInSection: indexPath.section))
+        let spacing = layout.itemSpacing * itemCount
+        let collectionViewHeight = max(collectionView.bounds.height, 400)
+        let availableHeight = collectionViewHeight - collectionView.contentInset.vertical - spacing
+        let itemHeight = availableHeight / itemCount
+        return itemHeight
     }
 }

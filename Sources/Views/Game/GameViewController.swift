@@ -99,7 +99,7 @@ extension GameViewController: GameViewModelDelegate {
     }
 
     func refreshScoreOptions() {
-        for (_, cell) in gameView.scoreSheet.cells {
+        for cell in gameView.scoreSheet.cells {
             cell.scoreLabel.text = viewModel.scoreText(forType: cell.type)
         }
     }

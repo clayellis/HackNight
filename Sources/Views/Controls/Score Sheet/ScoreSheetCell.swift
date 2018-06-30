@@ -8,9 +8,13 @@
 
 import UIKit
 
-class ScoreSheetCell: UIView {
+class ScoreSheetCell: UICollectionViewCell {
 
-    let type: ScoreSheetCellType
+    var type: ScoreSheetCellType! {
+        didSet {
+            titleLabel.text = type.description
+        }
+    }
 
     fileprivate let stack = UIStackView()
     let titleLabel = UILabel()
@@ -22,9 +26,8 @@ class ScoreSheetCell: UIView {
         }
     }
 
-    init(type: ScoreSheetCellType) {
-        self.type = type
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configureSubviews()
         configureLayout()
     }
@@ -34,12 +37,11 @@ class ScoreSheetCell: UIView {
     }
 
     private func configureSubviews() {
-        backgroundColor = .white
-        layer.cornerRadius = Styles.elementCornerRadius
+        contentView.backgroundColor = .white
+        contentView.layer.cornerRadius = Styles.elementCornerRadius
 
         let fontSize: CGFloat = 16
 
-        titleLabel.text = type.description
         titleLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
         titleLabel.numberOfLines = 2
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -47,7 +49,7 @@ class ScoreSheetCell: UIView {
         scoreLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .regular)
         scoreLabel.textAlignment = .center
 
-        Styles.applyShadow(to: self)
+        Styles.applyShadow(to: contentView)
     }
 
     private func configureLayout() {
