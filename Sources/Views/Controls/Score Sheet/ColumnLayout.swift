@@ -17,11 +17,12 @@ class ColumnLayout: UICollectionViewLayout {
     weak var delegate: ColumnLayoutDelegate!
 
     // TODO: didSet - invalidate cache
-    private(set) var itemSpacing: CGFloat = 6
+    /// The vertical spacing between items in the same column.
+    private(set) var itemSpacing: CGFloat = 8
 
     // TODO: didSet - invalidate cache
-    // TODO: This isn't being used right now
-    // var columnSpacing: CGFloat = 6
+    /// The horizontal spacing between columns.
+    private(set) var columnSpacing: CGFloat = 10
 
     private var numberOfColumns: Int {
         guard let collectionView = collectionView, let dataSource = collectionView.dataSource else {
@@ -51,22 +52,32 @@ class ColumnLayout: UICollectionViewLayout {
             return
         }
 
-        let columnWidth = contentWidth / CGFloat(numberOfColumns)
+        let columnWidth = (contentWidth - columnSpacing * CGFloat(numberOfColumns - 1)) / CGFloat(numberOfColumns)
         var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
         var xOffset = [CGFloat]()
         for column in 0 ..< numberOfColumns {
-            xOffset.append(CGFloat(column) * columnWidth)
+            xOffset.append(CGFloat(column) * (columnWidth + columnSpacing))
         }
 
         for column in 0 ..< numberOfColumns {
             for item in 0 ..< collectionView.numberOfItems(inSection: column) {
 
                 let indexPath = IndexPath(item: item, section: column)
-
                 let itemHeight = delegate.collectionView(collectionView, layout: self, heightForItemAt: indexPath)
-                let height = itemSpacing + itemHeight
+
+                let height: CGFloat
+                if item == 0 {
+                    height = itemHeight
+                } else {
+                    height = itemHeight + itemSpacing
+                }
+
                 let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
-                let insetFrame = frame.insetBy(dx: itemSpacing, dy: itemSpacing)
+
+                // Every item except the first in the column should have an inset from the top
+                let topInset = item == 0 ? 0 : itemSpacing
+                let insets = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
+                let insetFrame = frame.inset(by: insets)
 
                 let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                 attributes.frame = insetFrame
