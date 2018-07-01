@@ -47,6 +47,7 @@ final class ScoreSheetView: UIView {
         collectionView.delegate = self
         collectionView.alwaysBounceVertical = false
         collectionView.forceDelaysContentTouches(false)
+        collectionView.clipsToBounds = false
     }
 
     private func configureLayout() {
@@ -133,7 +134,7 @@ extension ScoreSheetView: UICollectionViewDelegate {
 extension ScoreSheetView: ColumnLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, layout: ColumnLayout, heightForItemAt indexPath: IndexPath) -> CGFloat {
         let itemCount = CGFloat(self.collectionView(collectionView, numberOfItemsInSection: indexPath.section))
-        let spacing = layout.itemSpacing * itemCount
+        let spacing = layout.itemSpacing * (itemCount - 1)
         let collectionViewHeight = max(collectionView.bounds.height, 400)
         let availableHeight = collectionViewHeight - collectionView.contentInset.vertical - spacing
         let itemHeight = availableHeight / itemCount
