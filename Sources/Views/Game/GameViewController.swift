@@ -33,6 +33,7 @@ final class GameViewController: UIViewController {
         configureCells()
         configureButtons()
         configureInitialStates()
+        configurePeekPop()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -65,6 +66,10 @@ final class GameViewController: UIViewController {
     private func configureInitialStates() {
         gameView.rollButton.isEnabled = viewModel.isRollButtonEnabled
         gameView.rollView.isUserInteractionEnabled = viewModel.canSelectDice
+    }
+
+    private func configurePeekPop() {
+        registerForPreviewing(with: self, sourceView: gameView.scoreSheet.peekSourceView)
     }
 
     @objc private func newGameTapped() {
@@ -131,4 +136,22 @@ extension GameViewController: ScoreSheetDelegate {
     func scoreSheet(_ scoreSheet: ScoreSheetView, didSelect cell: ScoreSheetCell) {
         viewModel.handleScoreSheetCellTapped(ofType: cell.type)
     }
+}
+
+extension GameViewController: UIViewControllerPreviewingDelegate {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let peekContext = gameView.scoreSheet.scoreSheetCellPeekContext(at: location) else {
+            return nil
+        }
+
+        previewingContext.sourceRect = peekContext.sourceRect
+
+        let vc = UIViewController()
+        vc.title = peekContext.cellType.description
+        vc.view.backgroundColor = .white
+        let nc = UINavigationController(rootViewController: vc)
+        return nc
+    }
+
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {}
 }

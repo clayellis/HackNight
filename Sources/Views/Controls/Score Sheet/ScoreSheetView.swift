@@ -121,14 +121,6 @@ extension ScoreSheetView: UICollectionViewDelegate {
 
         delegate?.scoreSheet(self, didSelect: scoreSheetCell)
     }
-
-    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
-
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-
-    }
 }
 
 extension ScoreSheetView: ColumnLayoutDelegate {
@@ -139,5 +131,32 @@ extension ScoreSheetView: ColumnLayoutDelegate {
         let availableHeight = collectionViewHeight - collectionView.contentInset.vertical - spacing
         let itemHeight = availableHeight / itemCount
         return itemHeight
+    }
+}
+
+// MARK: - Peek
+
+struct ScoreSheetCellPeekContext {
+    let sourceRect: CGRect
+    let cellType: ScoreSheetCellType
+}
+
+protocol ScoreSheetPeekContextProviding {
+    var peekSourceView: UIView { get }
+    func scoreSheetCellPeekContext(at location: CGPoint) -> ScoreSheetCellPeekContext?
+}
+
+extension ScoreSheetView: ScoreSheetPeekContextProviding {
+
+    var peekSourceView: UIView {
+        return collectionView
+    }
+
+    func scoreSheetCellPeekContext(at location: CGPoint) -> ScoreSheetCellPeekContext? {
+        guard let indexPath = collectionView.indexPathForItem(at: location), let attributes = collectionView.layoutAttributesForItem(at: indexPath) else {
+            return nil
+        }
+
+        return ScoreSheetCellPeekContext(sourceRect: attributes.frame, cellType: scoreSheetCellType(at: indexPath))
     }
 }
