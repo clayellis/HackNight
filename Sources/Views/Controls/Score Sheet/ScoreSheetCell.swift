@@ -26,6 +26,17 @@ class ScoreSheetCell: UICollectionViewCell {
         }
     }
 
+    override var isHighlighted: Bool {
+        get {
+            return super.isHighlighted
+        }
+
+        set {
+            super.isHighlighted = newValue
+            animateHighlightChange(newValue)
+        }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureSubviews()
@@ -78,23 +89,23 @@ class ScoreSheetCell: UICollectionViewCell {
         alpha = isEnabled ? 1 : 0.5
     }
 
-    override var isHighlighted: Bool {
-        get {
-            return super.isHighlighted
-        }
-
-        set {
-            super.isHighlighted = newValue
-            let highlighting = newValue
-            contentView.backgroundColor = highlighting ? .lightGray : .white
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.beginFromCurrentState, .allowUserInteraction], animations: {
-                if highlighting {
+    private func animateHighlightChange(_ isHighlighted: Bool) {
+        contentView.backgroundColor = isHighlighted ? Styles.lightBackground : .white
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0,
+            options: [.beginFromCurrentState, .allowUserInteraction],
+            animations: {
+                if isHighlighted {
                     let scale: CGFloat = 0.985
                     self.transform = self.transform.scaledBy(x: scale, y: scale)
                 } else {
                     self.transform = .identity
                 }
-            }, completion: nil)
-        }
+            },
+            completion: nil
+        )
     }
 }
